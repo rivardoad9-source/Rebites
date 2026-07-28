@@ -6,6 +6,7 @@
 <title>Re-Bites — Mango Cheese Milk, Rp15.000</title>
 <meta name="description" content="Mango Cheese Milk dari Re-Bites. Cream mango cheese, mangga asli, jelly mangga, dan jelly kelapa dalam cup 300 ml. Fresh per pre-order, Rp15.000. Pesan lewat WhatsApp." />
 <meta name="theme-color" content="#FFF8EC" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 2C53 32 68 47 98 50C68 53 53 68 50 98C47 68 32 53 2 50C32 47 47 32 50 2Z' fill='%23E8792D'/%3E%3C/svg%3E" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Re-Bites — Mango Cheese Milk" />
@@ -13,7 +14,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,700..900,0..100,0..1;1,9..144,400..600,0..100,0..1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
 /* ============================================================
@@ -140,15 +141,37 @@ a{color:inherit}
 .hero .wrap{position:relative;z-index:1}
 
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:clamp(44px,7vw,76px)}
-.logo-slot{
-  display:flex;align-items:center;justify-content:center;
-  width:132px;height:56px;
-  border:2.5px dashed rgba(43,27,18,.34);border-radius:var(--r-sm);
-  background:rgba(255,255,255,.5);
-  font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(43,27,18,.45);text-align:center;line-height:1.25;
+/* ---------- wordmark ---------- */
+.wordmark{
+  display:inline-flex;align-items:baseline;
+  line-height:1;white-space:nowrap;
+  text-decoration:none;color:inherit;
+  font-size:var(--wm,1.7rem);
 }
-.brandline{font-family:var(--font-display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em}
+.wm-re{
+  font-family:var(--font-display);
+  font-style:italic;font-weight:500;
+  font-variation-settings:"SOFT" 0,"WONK" 1,"opsz" 144;
+  letter-spacing:-.015em;padding-right:.03em;
+}
+.wm-bites{
+  font-family:var(--font-body);
+  font-weight:800;letter-spacing:-.05em;
+}
+.wm-star{
+  width:.95em;height:.95em;flex:none;fill:currentColor;
+  margin-left:-.19em;position:relative;top:-.40em;
+}
+.topbar .wordmark{--wm:1.75rem}
+.foot .wordmark{--wm:2.1rem}
+
+.ig-top{
+  font-size:.85rem;font-weight:700;text-decoration:none;
+  color:var(--coffee);background:var(--ivory);
+  border:2px solid var(--coffee);border-radius:999px;
+  padding:8px 16px;transition:background-color .16s ease;
+}
+.ig-top:hover{background:var(--cheese)}
 
 .hero-grid{
   display:grid;gap:clamp(40px,6vw,68px);
@@ -459,8 +482,11 @@ a{color:inherit}
   <div class="wrap">
 
     <div class="topbar">
-      <div class="logo-slot" aria-label="Area logo Re-Bites (belum diisi)">Logo<br>di sini</div>
-      <span class="brandline">Re-Bites</span>
+      <span class="wordmark" role="img" aria-label="Re-Bites">
+        <span class="wm-re" aria-hidden="true">re</span><span class="wm-bites" aria-hidden="true">bites</span>
+        <svg class="wm-star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2C53 32 68 47 98 50C68 53 53 68 50 98C47 68 32 53 2 50C32 47 47 32 50 2Z"/></svg>
+      </span>
+      <a class="ig-top" href="https://instagram.com/rebites.co" target="_blank" rel="noopener">@rebites.co</a>
     </div>
 
     <div class="hero-grid">
@@ -784,7 +810,10 @@ a{color:inherit}
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <h3>Re-Bites</h3>
+        <span class="wordmark" role="img" aria-label="Re-Bites">
+          <span class="wm-re" aria-hidden="true">re</span><span class="wm-bites" aria-hidden="true">bites</span>
+          <svg class="wm-star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2C53 32 68 47 98 50C68 53 53 68 50 98C47 68 32 53 2 50C32 47 47 32 50 2Z"/></svg>
+        </span>
         <p>Cream mango cheese dengan mangga asli, jelly mangga, dan jelly kelapa. Cup 300 ml, dibuat fresh setiap ada pesanan masuk.</p>
       </div>
 
