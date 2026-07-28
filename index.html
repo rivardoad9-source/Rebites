@@ -109,6 +109,25 @@ a{color:inherit}
 }
 .lede{font-size:clamp(1.02rem,1.7vw,1.18rem);color:var(--coffee-60);max-width:52ch}
 
+/* spotlighted opening line + marker highlights */
+.lede-lead{
+  display:block;margin-bottom:.62em;
+  font-family:var(--font-display);font-weight:800;
+  font-size:clamp(1.3rem,2.5vw,1.7rem);
+  line-height:1.2;letter-spacing:-.015em;
+  color:var(--coffee);
+}
+.hl{position:relative;white-space:nowrap}
+.hl::before{
+  content:"";position:absolute;z-index:-1;
+  left:-.16em;right:-.16em;bottom:.04em;height:.52em;
+  background:var(--hlc,var(--cheese));
+  border-radius:.3em;opacity:.62;
+  transform-origin:left center;
+  animation:hlIn .5s cubic-bezier(.2,.8,.3,1) var(--d,2.5s) both;
+}
+@keyframes hlIn{from{transform:rotate(-1.4deg) scaleX(0)}to{transform:rotate(-1.4deg) scaleX(1)}}
+
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   font-family:var(--font-body);font-size:1.02rem;font-weight:800;
@@ -179,7 +198,7 @@ a{color:inherit}
 }
 @media(min-width:940px){.hero-grid{grid-template-columns:1.06fr .94fr}}
 
-.hero h1{margin:20px 0 0}
+.hero h1{margin:0}
 .hero h1 .mango-word{color:var(--mango);display:inline-block}
 .hero .lede{margin-top:22px}
 
@@ -459,6 +478,58 @@ a{color:inherit}
   font-size:.83rem;color:var(--ivory-70);
 }
 
+/* ============================================================
+   LOADER — walking mango mascot
+   ============================================================ */
+.loader{
+  position:fixed;inset:0;z-index:9999;
+  display:grid;place-items:center;
+  background:var(--ivory);
+  overflow:hidden;              /* mascot runs past the edges */
+  /* CSS drives the exit so the overlay can never trap a no-JS visitor */
+  animation:loaderOut .55s ease 2.2s forwards;
+}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+@keyframes loaderOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+html.is-loading{overflow:hidden}
+
+.loader-inner{display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px;text-align:center}
+.loader .wordmark{--wm:1.5rem;opacity:.85}
+.loader-text{font-size:.9rem;font-weight:700;color:var(--coffee-60)}
+
+.mascot{width:clamp(160px,36vw,220px);height:auto;overflow:visible}
+.m-fruit{fill:url(#mangoGrad);stroke:var(--coffee);stroke-width:4;stroke-linejoin:round}
+.m-leaf{fill:var(--leaf);stroke:var(--coffee);stroke-width:3.4;stroke-linejoin:round}
+.m-stem{stroke:var(--leaf);stroke-width:5;stroke-linecap:round;fill:none}
+.m-leg path,.m-arm path{stroke:var(--coffee);stroke-width:5;stroke-linecap:round;fill:none}
+.m-eye{fill:var(--coffee)}
+.m-spark{fill:#fff}
+.m-smile{stroke:var(--coffee);stroke-width:3.4;stroke-linecap:round;fill:none}
+.m-blush{fill:#C85F19;opacity:.28}
+.m-shadow{fill:var(--coffee);transform-box:view-box;transform-origin:60px 126px}
+.m-speed line{stroke:var(--coffee);stroke-width:3.4;stroke-linecap:round}
+.m-track{stroke:var(--coffee);stroke-width:3;stroke-linecap:round;opacity:.18;stroke-dasharray:9 14}
+
+/* --- running in place: fast cadence, wide swing, forward lean.
+       the ground scrolls under him instead of him crossing the screen --- */
+.m-track {animation:mTrack .34s linear infinite}
+.m-all   {transform-box:view-box;transform-origin:60px 116px;animation:mBob .34s ease-in-out infinite}
+.m-leg-a {transform-box:view-box;transform-origin:50px 84px;animation:mLegA .34s ease-in-out infinite}
+.m-leg-b {transform-box:view-box;transform-origin:70px 84px;animation:mLegB .34s ease-in-out infinite}
+.m-arm-a {transform-box:view-box;transform-origin:32px 56px;animation:mArmA .34s ease-in-out infinite}
+.m-arm-b {transform-box:view-box;transform-origin:88px 56px;animation:mArmB .34s ease-in-out infinite}
+.m-shadow{animation:mShadow .34s ease-in-out infinite}
+.m-speed {animation:mSpeed .34s ease-out infinite}
+
+@keyframes mTrack {to{stroke-dashoffset:23}}
+@keyframes mBob   {0%,100%{transform:rotate(8deg) translateY(0)} 50%{transform:rotate(8deg) translateY(-6px)}}
+@keyframes mLegA  {0%,100%{transform:rotate(42deg)}    50%{transform:rotate(-38deg)}}
+@keyframes mLegB  {0%,100%{transform:rotate(-38deg)}   50%{transform:rotate(42deg)}}
+@keyframes mArmA  {0%,100%{transform:rotate(-34deg)}   50%{transform:rotate(30deg)}}
+@keyframes mArmB  {0%,100%{transform:rotate(30deg)}    50%{transform:rotate(-34deg)}}
+@keyframes mShadow{0%,100%{transform:scaleX(1);opacity:.13} 50%{transform:scaleX(.72);opacity:.07}}
+@keyframes mSpeed {0%{opacity:.34;transform:translateX(6px)} 100%{opacity:.06;transform:translateX(-12px)}}
+
 /* ---------- calm scroll reveals ---------- */
 .rise{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .rise.in{opacity:1;transform:none}
@@ -466,6 +537,9 @@ a{color:inherit}
 /* ---------- reduced motion ---------- */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .loader{animation:loaderOut .3s ease .4s forwards}
+  .m-all,.m-leg-a,.m-leg-b,.m-arm-a,.m-arm-b,.m-shadow,.m-speed,.m-track{animation:none}
+  .hl::before{animation:none}
   .build{height:auto}
   .build-sticky{position:static;height:auto;min-height:0;padding-block:clamp(72px,11vw,132px)}
   .hero-cup,.hero-note svg{animation:none}
@@ -475,6 +549,56 @@ a{color:inherit}
 </style>
 </head>
 <body>
+<!-- ============================ LOADER ============================ -->
+<div class="loader" id="loader" role="status" aria-label="Memuat halaman Re-Bites">
+  <div class="loader-inner">
+    <svg class="mascot" viewBox="0 0 120 134" role="img" aria-label="Maskot mangga sedang berjalan">
+      <defs>
+        <linearGradient id="mangoGrad" x1="0.15" y1="0" x2="0.7" y2="1">
+          <stop offset="0"   stop-color="#F8C95C"/>
+          <stop offset="0.5" stop-color="#F2A93F"/>
+          <stop offset="1"   stop-color="#E8792D"/>
+        </linearGradient>
+      </defs>
+
+      <line class="m-track" x1="-30" y1="130" x2="150" y2="130"/>
+      <g class="m-speed">
+        <line x1="-14" y1="42" x2="10" y2="42"/>
+        <line x1="-22" y1="60" x2="6"  y2="60"/>
+        <line x1="-10" y1="78" x2="12" y2="78"/>
+      </g>
+      <ellipse class="m-shadow" cx="60" cy="126" rx="30" ry="4.5"/>
+
+      <g class="m-all">
+        <g class="m-leg m-leg-a"><path d="M50 84 L45 114"/><path d="M45 114 L34 117"/></g>
+        <g class="m-leg m-leg-b"><path d="M70 84 L75 114"/><path d="M75 114 L86 117"/></g>
+
+        <g class="m-arm m-arm-a"><path d="M32 56 L11 67"/></g>
+        <g class="m-arm m-arm-b"><path d="M88 56 L109 67"/></g>
+
+        <path class="m-fruit" d="M62 16 C84 16 96 34 94 54 C92 74 76 88 58 88 C40 88 25 75 25 56 C25 37 42 18 62 16 Z"/>
+        <path class="m-leaf"  d="M64 18 C72 7 87 5 94 9 C87 18 75 22 64 18 Z"/>
+        <path class="m-stem"  d="M60 19 L65 12"/>
+
+        <ellipse class="m-blush" cx="36" cy="61" rx="7" ry="4.5"/>
+        <ellipse class="m-blush" cx="84" cy="61" rx="7" ry="4.5"/>
+        <circle class="m-eye"   cx="50" cy="50" r="5.2"/>
+        <circle class="m-eye"   cx="72" cy="50" r="5.2"/>
+        <circle class="m-spark" cx="51.8" cy="48.2" r="1.8"/>
+        <circle class="m-spark" cx="73.8" cy="48.2" r="1.8"/>
+        <path   class="m-smile" d="M52 63 Q61 71 70 63"/>
+      </g>
+    </svg>
+
+    <span class="wordmark" role="img" aria-label="Re-Bites">
+      <span class="wm-re" aria-hidden="true">re</span><span class="wm-bites" aria-hidden="true">bites</span>
+      <svg class="wm-star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2C53 32 68 47 98 50C68 53 53 68 50 98C47 68 32 53 2 50C32 47 47 32 50 2Z"/></svg>
+    </span>
+
+    <p class="loader-text">Lagi nyiapin cup kamu…</p>
+  </div>
+</div>
+
 <a class="skip" href="#pesan">Langsung ke form pemesanan</a>
 
 <!-- ============================ HERO ============================ -->
@@ -491,11 +615,12 @@ a{color:inherit}
 
     <div class="hero-grid">
       <div>
-        <span class="eyebrow"><span class="dot"></span> Fresh per pre-order</span>
-
         <h1>Mango<br><span class="mango-word">Cheese</span> Milk</h1>
 
-        <p class="lede">Cream mango cheese, potongan mangga asli, jelly mangga, dan jelly kelapa — diaduk jadi satu cup 300 ml. Nggak pakai bubuk perisa, nggak pakai stok kemarin.</p>
+        <p class="lede">
+          <span class="lede-lead">Sensasi <span class="hl" style="--hlc:#F2C14E;--d:2.5s">creamy</span>, <span class="hl" style="--hlc:#F0A03C;--d:2.64s">manis</span>, dan <span class="hl" style="--hlc:#9CC4AE;--d:2.78s">segar</span> yang diaduk sempurna.</span>
+          Perpaduan cream mango cheese, mangga asli, serta jelly mangga &amp; kelapa dalam cup 300 ml. Selalu segar setiap hari, tanpa bahan instan.
+        </p>
 
         <div class="ing-row">
           <span class="ing">🥭 Mangga asli</span>
@@ -849,6 +974,25 @@ a{color:inherit}
   var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
 
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ==========================================================
+     0) Intro loader — CSS already guarantees the fade-out,
+        this only locks scroll while it shows and cleans up after
+     ========================================================== */
+  (function () {
+    var loader = document.getElementById("loader");
+    if (!loader) return;
+    var HOLD = reduce ? 400 : 2200;           // must match the CSS delay
+    var root = document.documentElement;
+    root.classList.add("is-loading");
+    setTimeout(function () {
+      root.classList.remove("is-loading");    // unlock scroll no matter what
+      loader.classList.add("done");
+      setTimeout(function () {
+        if (loader.parentNode) loader.parentNode.removeChild(loader);
+      }, 700);
+    }, HOLD);
+  })();
 
   /* ==========================================================
      1) SIGNATURE — scroll-scrubbed layered fill
