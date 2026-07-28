@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Re-Bites — Mango Cheese Milk, Rp15.000</title>
+<meta name="description" content="Mango Cheese Milk dari Re-Bites. Cream mango cheese, mangga asli, jelly mangga, dan jelly kelapa dalam cup 300 ml. Fresh per pre-order, Rp15.000. Pesan lewat WhatsApp." />
+<meta name="theme-color" content="#FFF8EC" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Re-Bites — Mango Cheese Milk" />
+<meta property="og:description" content="Cream mango cheese, mangga asli, jelly mangga, jelly kelapa. Cup 300 ml, fresh per pre-order. Rp15.000." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   RE-BITES — design tokens
+   ============================================================ */
+:root{
+  --ivory:#FFF8EC;
+  --ivory-deep:#FBEBD2;
+  --mango:#E8792D;
+  --mango-deep:#C85F19;
+  --cheese:#D9A62E;
+  --leaf:#1F4D3D;
+  --leaf-deep:#153629;
+  --coffee:#2B1B12;
+  --milk:#FFFDF7;
+  --foam:#F5E9BE;
+
+  --coffee-60:rgba(43,27,18,.60);
+  --coffee-12:rgba(43,27,18,.12);
+  --ivory-70:rgba(255,248,236,.70);
+
+  --font-display:"Fraunces",Georgia,serif;
+  --font-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  --r-sm:14px;
+  --r-md:22px;
+  --r-lg:32px;
+  --r-xl:48px;
+
+  --pop:5px 5px 0 var(--coffee);
+  --pop-sm:3px 3px 0 var(--coffee);
+  --bd:3px solid var(--coffee);
+
+  --wrap:1140px;
+  --pad:clamp(20px,5vw,40px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ivory);
+  color:var(--coffee);
+  font-family:var(--font-body);
+  font-size:clamp(16px,1.05vw,17px);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+
+h1,h2,h3,.display{
+  font-family:var(--font-display);
+  font-variation-settings:"SOFT" 60,"WONK" 1,"opsz" 110;
+  font-weight:800;
+  line-height:1.02;
+  letter-spacing:-.02em;
+  margin:0;
+}
+h1{font-size:clamp(2.9rem,8.5vw,5.4rem)}
+h2{font-size:clamp(2.1rem,5.4vw,3.5rem)}
+h3{font-size:clamp(1.25rem,2.4vw,1.55rem);line-height:1.15}
+p{margin:0}
+a{color:inherit}
+
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:var(--pad)}
+.section{padding-block:clamp(72px,11vw,132px)}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:99;
+  background:var(--coffee);color:var(--ivory);
+  padding:12px 20px;border-radius:0 0 var(--r-sm) 0;font-weight:700;
+}
+.skip:focus{left:0}
+
+:where(a,button,input,textarea,summary):focus-visible{
+  outline:3px solid var(--mango);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+/* ---------- shared bits ---------- */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ivory);border:2px solid var(--coffee);
+  padding:7px 15px;border-radius:999px;
+}
+.eyebrow .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--mango);
+  flex:none;
+}
+.lede{font-size:clamp(1.02rem,1.7vw,1.18rem);color:var(--coffee-60);max-width:52ch}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--font-body);font-size:1.02rem;font-weight:800;
+  padding:17px 32px;border-radius:999px;border:var(--bd);
+  cursor:pointer;text-decoration:none;
+  transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease;
+}
+.btn-primary{background:var(--mango);color:var(--coffee);box-shadow:var(--pop)}
+.btn-primary:hover{background:#f08a41;transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--coffee)}
+.btn-primary:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--coffee)}
+.btn-ghost{background:transparent;color:var(--coffee)}
+.btn-ghost:hover{background:var(--ivory-deep)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;padding-block:clamp(28px,5vw,44px) clamp(60px,8vw,96px);overflow:hidden}
+.hero::before{
+  content:"";position:absolute;pointer-events:none;
+  width:min(760px,105vw);aspect-ratio:1;
+  right:-24%;top:-40%;
+  background:radial-gradient(circle,rgba(232,121,45,.24),rgba(232,121,45,0) 66%);
+}
+.hero::after{
+  content:"";position:absolute;pointer-events:none;
+  width:min(520px,80vw);aspect-ratio:1;
+  left:-22%;bottom:-42%;
+  background:radial-gradient(circle,rgba(217,166,46,.20),rgba(217,166,46,0) 66%);
+}
+.hero .wrap{position:relative;z-index:1}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:clamp(44px,7vw,76px)}
+.logo-slot{
+  display:flex;align-items:center;justify-content:center;
+  width:132px;height:56px;
+  border:2.5px dashed rgba(43,27,18,.34);border-radius:var(--r-sm);
+  background:rgba(255,255,255,.5);
+  font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(43,27,18,.45);text-align:center;line-height:1.25;
+}
+.brandline{font-family:var(--font-display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em}
+
+.hero-grid{
+  display:grid;gap:clamp(40px,6vw,68px);
+  grid-template-columns:1fr;align-items:center;
+}
+@media(min-width:940px){.hero-grid{grid-template-columns:1.06fr .94fr}}
+
+.hero h1{margin:20px 0 0}
+.hero h1 .mango-word{color:var(--mango);display:inline-block}
+.hero .lede{margin-top:22px}
+
+.ing-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+.ing{
+  font-size:.86rem;font-weight:700;
+  background:var(--milk);border:2px solid var(--coffee);
+  padding:7px 15px;border-radius:999px;
+}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px}
+
+.hero-note{
+  display:flex;align-items:center;gap:10px;margin-top:26px;
+  font-size:.9rem;font-weight:600;color:var(--coffee-60);
+}
+.hero-note svg{flex:none;animation:nudge 2.4s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* hero product */
+.hero-art{position:relative;display:flex;justify-content:center;align-items:center}
+.hero-cup{width:min(300px,72vw);animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}
+
+.price-sticker{
+  position:absolute;right:-2%;top:4%;
+  background:var(--cheese);border:var(--bd);border-radius:var(--r-md);
+  padding:14px 20px;text-align:center;box-shadow:var(--pop);
+  transform:rotate(-9deg);
+}
+.price-sticker .amt{font-family:var(--font-display);font-weight:900;font-size:1.7rem;line-height:1;display:block}
+.price-sticker .unit{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+
+/* ============================================================
+   SIGNATURE — scroll-filled layered cup
+   ============================================================ */
+.build{position:relative;height:340vh}
+.build-sticky{
+  position:sticky;top:0;
+  height:100vh;height:100svh;
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+.build-inner{
+  display:grid;gap:clamp(22px,4vw,56px);align-items:center;
+  grid-template-columns:1fr;width:100%;
+}
+@media(min-width:900px){.build-inner{grid-template-columns:.92fr 1.08fr}}
+
+.build-copy h2{margin-bottom:14px}
+.build-copy .lede{max-width:40ch}
+
+.layer-list{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:10px}
+@media(max-width:899px){.layer-list{grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}}
+
+.layer-item{
+  display:flex;align-items:center;gap:13px;
+  padding:12px 16px;border-radius:999px;
+  border:2px solid var(--coffee-12);
+  background:transparent;
+  transition:border-color .35s ease,background-color .35s ease,transform .35s ease,opacity .35s ease;
+  opacity:.5;
+}
+.layer-item .swatch{
+  width:20px;height:20px;border-radius:50%;flex:none;
+  border:2px solid var(--coffee);
+  transform:scale(.72);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.layer-item .txt{font-weight:700;font-size:.95rem;line-height:1.25}
+.layer-item .txt small{display:block;font-weight:500;font-size:.78rem;color:var(--coffee-60)}
+.layer-item.on{
+  opacity:1;border-color:var(--coffee);background:var(--milk);
+  transform:translateX(4px);box-shadow:var(--pop-sm);
+}
+.layer-item.on .swatch{transform:scale(1)}
+@media(max-width:899px){
+  .layer-item{padding:10px 12px;gap:9px}
+  .layer-item .txt{font-size:.82rem}
+  .layer-item .txt small{display:none}
+  .layer-item.on{transform:none}
+}
+
+.build-stage{display:flex;flex-direction:column;align-items:center;gap:18px}
+/* cup is squat (~1.06:1), so the vh cap is sized off its height not its width */
+.cup-wrap{position:relative;width:min(360px,64vw,52vh)}
+@media(max-width:899px){.cup-wrap{width:min(262px,56vw,40vh)}}
+
+.rail{
+  width:min(300px,64vw,46vh);height:9px;border-radius:999px;
+  background:var(--coffee-12);overflow:hidden;border:2px solid var(--coffee);
+}
+.rail-fill{
+  height:100%;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,var(--mango),var(--cheese));
+  transition:width .1s linear;
+}
+.rail-label{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coffee-60)}
+
+/* short + wide (phone in landscape): go two-column and trim, or the
+   sticky content grows taller than the viewport and the pin breaks */
+@media(min-width:660px) and (max-height:640px){
+  .build{height:300vh}
+  .build-inner{grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,32px)}
+  .build-copy .eyebrow,
+  .build-copy .lede{display:none}
+  .build-copy h2{font-size:clamp(1.45rem,3.4vw,2rem)}
+  .layer-list{grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+  .layer-item{padding:8px 11px;gap:8px}
+  .layer-item .txt{font-size:.76rem}
+  .layer-item .txt small{display:none}
+  .layer-item .swatch{width:15px;height:15px}
+  .build-stage{gap:10px}
+  .rail-label{font-size:.7rem}
+}
+
+/* ============================================================
+   WHY — floating green slab
+   ============================================================ */
+.why-outer{padding-inline:clamp(12px,2.4vw,26px)}
+.why{
+  background:var(--leaf);color:var(--ivory);
+  border-radius:var(--r-xl);
+  padding-block:clamp(60px,9vw,104px);
+  position:relative;overflow:hidden;
+}
+.why::before{
+  content:"";position:absolute;inset:auto -10% -46% auto;
+  width:min(560px,90vw);aspect-ratio:1;
+  background:radial-gradient(circle,rgba(217,166,46,.20),transparent 66%);
+}
+.why .wrap{position:relative;z-index:1}
+.why h2{max-width:16ch}
+.why .lede{color:var(--ivory-70);margin-top:16px}
+.why .eyebrow{background:transparent;border-color:rgba(255,248,236,.4);color:var(--ivory)}
+.why .eyebrow .dot{background:var(--cheese)}
+
+.why-grid{display:grid;gap:18px;grid-template-columns:1fr;margin-top:clamp(36px,5vw,56px)}
+@media(min-width:760px){.why-grid{grid-template-columns:repeat(3,1fr)}}
+
+.why-card{
+  background:var(--ivory);color:var(--coffee);
+  border:var(--bd);border-radius:var(--r-lg);
+  padding:clamp(24px,3vw,32px);
+  box-shadow:var(--pop);
+  display:flex;flex-direction:column;gap:14px;
+}
+.why-card .ico{
+  width:56px;height:56px;border-radius:var(--r-sm);
+  border:2.5px solid var(--coffee);
+  display:grid;place-items:center;flex:none;
+}
+.why-card p{color:var(--coffee-60);font-size:.97rem}
+.why-card:nth-child(1) .ico{background:var(--mango)}
+.why-card:nth-child(2) .ico{background:var(--cheese)}
+.why-card:nth-child(3) .ico{background:var(--foam)}
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+.steps-grid{display:grid;gap:20px;grid-template-columns:1fr;margin-top:clamp(36px,5vw,56px)}
+@media(min-width:820px){.steps-grid{grid-template-columns:repeat(3,1fr);gap:22px}}
+
+.step{
+  position:relative;
+  background:var(--milk);border:var(--bd);border-radius:var(--r-lg);
+  padding:clamp(26px,3vw,34px);
+  display:flex;flex-direction:column;gap:12px;
+}
+.step .num{
+  font-family:var(--font-display);font-weight:900;
+  font-size:3.1rem;line-height:1;color:var(--mango);
+  -webkit-text-stroke:2px var(--coffee);
+}
+.step p{color:var(--coffee-60);font-size:.97rem}
+.step .tag{
+  margin-top:auto;font-size:.8rem;font-weight:700;
+  color:var(--coffee);background:var(--ivory-deep);
+  border:2px solid var(--coffee);border-radius:999px;
+  padding:6px 13px;align-self:flex-start;
+}
+
+/* ============================================================
+   ORDER FORM
+   ============================================================ */
+.order{background:var(--ivory-deep)}
+.order-card{
+  background:var(--milk);border:var(--bd);border-radius:var(--r-xl);
+  padding:clamp(28px,4.5vw,56px);
+  box-shadow:7px 7px 0 var(--coffee);
+  max-width:720px;margin-inline:auto;
+}
+.order h2{text-align:center}
+.order-sub{text-align:center;color:var(--coffee-60);margin-top:14px;font-size:.98rem}
+
+.field{margin-top:26px}
+.field label{display:block;font-weight:800;font-size:.95rem;margin-bottom:9px}
+.field .hint{font-weight:500;color:var(--coffee-60);font-size:.85rem}
+
+.input,.textarea{
+  width:100%;font-family:var(--font-body);font-size:1rem;color:var(--coffee);
+  background:var(--ivory);
+  border:2.5px solid var(--coffee);border-radius:var(--r-sm);
+  padding:15px 17px;
+  transition:box-shadow .15s ease,border-color .15s ease;
+}
+.input::placeholder,.textarea::placeholder{color:rgba(43,27,18,.34)}
+.input:focus,.textarea:focus{outline:none;box-shadow:var(--pop-sm)}
+.textarea{resize:vertical;min-height:96px;line-height:1.55}
+.input[aria-invalid="true"],.textarea[aria-invalid="true"]{border-color:#B3261E}
+
+.qty{display:flex;align-items:center;gap:12px}
+.qty-btn{
+  width:52px;height:52px;flex:none;
+  font-size:1.5rem;font-weight:800;font-family:var(--font-body);line-height:1;
+  background:var(--ivory);border:2.5px solid var(--coffee);border-radius:var(--r-sm);
+  cursor:pointer;display:grid;place-items:center;
+  transition:background-color .15s ease,transform .12s ease;
+}
+.qty-btn:hover{background:var(--cheese)}
+.qty-btn:active{transform:scale(.94)}
+.qty .input{text-align:center;max-width:110px;font-weight:800;font-size:1.1rem;
+  -moz-appearance:textfield;appearance:textfield}
+.qty .input::-webkit-outer-spin-button,
+.qty .input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+.err{
+  display:none;align-items:center;gap:8px;
+  margin-top:9px;font-size:.87rem;font-weight:700;color:#B3261E;
+}
+.err.show{display:flex}
+.err svg{flex:none}
+
+.total-row{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-top:30px;padding:20px 24px;
+  background:var(--ivory-deep);border:2.5px dashed var(--coffee);border-radius:var(--r-md);
+}
+.total-row .lbl{font-weight:700;font-size:.9rem;letter-spacing:.05em;text-transform:uppercase;color:var(--coffee-60)}
+.total-row .val{font-family:var(--font-display);font-weight:900;font-size:2rem;line-height:1}
+
+.submit{width:100%;margin-top:24px;padding-block:20px;font-size:1.08rem}
+.form-foot{margin-top:16px;text-align:center;font-size:.85rem;color:var(--coffee-60);line-height:1.55}
+.fallback{display:none;margin-top:14px;text-align:center;font-size:.9rem;font-weight:700}
+.fallback.show{display:block}
+.fallback a{color:var(--mango-deep)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{background:var(--leaf);color:var(--ivory);padding-block:clamp(52px,7vw,76px)}
+.foot-grid{display:grid;gap:34px;grid-template-columns:1fr}
+@media(min-width:760px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr}}
+.foot h3{font-size:1.6rem}
+.foot p{color:var(--ivory-70);font-size:.95rem;margin-top:10px;max-width:34ch}
+.foot .cap{font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cheese);margin-bottom:14px}
+.foot a.wa{
+  display:inline-flex;align-items:center;gap:9px;
+  font-weight:800;color:var(--ivory);text-decoration:none;
+  border-bottom:2px solid var(--cheese);padding-bottom:3px;
+}
+.soc-row{display:flex;flex-wrap:wrap;gap:9px}
+.soc{
+  font-size:.82rem;font-weight:700;color:var(--ivory-70);
+  border:2px dashed rgba(255,248,236,.32);border-radius:999px;
+  padding:8px 15px;
+}
+.soc-live{
+  color:var(--coffee);background:var(--cheese);
+  border:2px solid var(--cheese);text-decoration:none;
+  transition:background-color .16s ease;
+}
+.soc-live:hover{background:#e8b846;border-color:#e8b846}
+.foot-base{
+  margin-top:clamp(38px,5vw,54px);padding-top:24px;
+  border-top:1px solid rgba(255,248,236,.18);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-size:.83rem;color:var(--ivory-70);
+}
+
+/* ---------- calm scroll reveals ---------- */
+.rise{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.rise.in{opacity:1;transform:none}
+
+/* ---------- reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .build{height:auto}
+  .build-sticky{position:static;height:auto;min-height:0;padding-block:clamp(72px,11vw,132px)}
+  .hero-cup,.hero-note svg{animation:none}
+  .rise{opacity:1;transform:none;transition:none}
+  *{transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#pesan">Langsung ke form pemesanan</a>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="logo-slot" aria-label="Area logo Re-Bites (belum diisi)">Logo<br>di sini</div>
+      <span class="brandline">Re-Bites</span>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Fresh per pre-order</span>
+
+        <h1>Mango<br><span class="mango-word">Cheese</span> Milk</h1>
+
+        <p class="lede">Cream mango cheese, potongan mangga asli, jelly mangga, dan jelly kelapa — diaduk jadi satu cup 300 ml. Nggak pakai bubuk perisa, nggak pakai stok kemarin.</p>
+
+        <div class="ing-row">
+          <span class="ing">🥭 Mangga asli</span>
+          <span class="ing">🧀 Cream mango cheese</span>
+          <span class="ing">🥥 Jelly kelapa</span>
+          <span class="ing">🥄 Cup 300 ml</span>
+        </div>
+
+        <div class="cta-row">
+          <a href="#pesan" class="btn btn-primary">Pesan Sekarang</a>
+          <a href="#cara" class="btn btn-ghost">Lihat cara pesan</a>
+        </div>
+
+        <p class="hero-note">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+          Gulir ke bawah — lihat semua bahannya masuk ke cup.
+        </p>
+      </div>
+
+      <div class="hero-art">
+        <!-- finished product shot -->
+        <svg class="hero-cup" viewBox="0 0 240 226" role="img" aria-label="Ilustrasi cup 300 ml Re-Bites: cream mango cheese dengan potongan mangga, jelly mangga, dan jelly kelapa tercampur rata di dalamnya.">
+          <defs>
+            <clipPath id="heroCupClip">
+              <path d="M26 46 L48 176 Q50 189 62 189 L178 189 Q190 189 192 176 L214 46 Z"/>
+            </clipPath>
+            <!-- irregular chunks, not neat geometry — shared with the process cup -->
+            <path id="pMangoA" d="M-11 -7 L10 -9 L12 4 L-3 10 L-12 3 Z" fill="#E8792D"/>
+            <path id="pMangoB" d="M-10 -8 L11 -4 L8 8 L-9 9 Z"          fill="#F2A93F"/>
+            <path id="pJellyA" d="M-9 -8 L10 -7 L12 5 L-2 10 L-11 2 Z"  fill="#E8C158"/>
+            <path id="pJellyB" d="M-11 -5 L6 -10 L11 2 L2 10 L-10 6 Z"  fill="#DDB04A"/>
+            <path id="pCocoA"  d="M-10 -6 L7 -9 L12 2 L1 10 L-11 4 Z"   fill="#FFFBF0" stroke="#E7DCC2" stroke-width="1.3"/>
+            <path id="pCocoB"  d="M-9 -9 L10 -5 L9 7 L-8 9 Z"           fill="#FDF6E6" stroke="#E7DCC2" stroke-width="1.3"/>
+          </defs>
+
+          <g clip-path="url(#heroCupClip)">
+            <!-- one homogeneous mixture, not layers -->
+            <rect x="20" y="46" width="200" height="143" fill="#F5E7C4"/>
+
+            <use href="#pMangoA" x="72"  y="171"/><use href="#pCocoA"  x="102" y="168"/><use href="#pJellyA" x="132" y="172"/><use href="#pMangoB" x="162" y="168"/>
+            <use href="#pCocoB"  x="64"  y="154"/><use href="#pJellyB" x="94"  y="151"/><use href="#pMangoA" x="124" y="155"/><use href="#pCocoA"  x="154" y="151"/><use href="#pJellyA" x="180" y="154"/>
+            <use href="#pMangoB" x="58"  y="136"/><use href="#pCocoB"  x="88"  y="133"/><use href="#pJellyB" x="118" y="137"/><use href="#pMangoA" x="148" y="133"/><use href="#pCocoA"  x="178" y="136"/>
+            <use href="#pJellyA" x="54"  y="118"/><use href="#pMangoB" x="84"  y="115"/><use href="#pCocoB"  x="114" y="119"/><use href="#pJellyB" x="144" y="115"/><use href="#pMangoA" x="174" y="118"/>
+            <use href="#pCocoA"  x="52"  y="100"/><use href="#pJellyA" x="82"  y="97"/> <use href="#pMangoB" x="112" y="101"/><use href="#pCocoB"  x="142" y="97"/> <use href="#pJellyB" x="172" y="100"/>
+            <use href="#pMangoA" x="50"  y="82"/> <use href="#pCocoA"  x="80"  y="79"/> <use href="#pJellyA" x="110" y="83"/> <use href="#pMangoB" x="140" y="79"/> <use href="#pCocoB"  x="170" y="82"/>
+            <use href="#pJellyB" x="56"  y="67"/> <use href="#pMangoA" x="88"  y="64"/> <use href="#pCocoA"  x="120" y="68"/> <use href="#pJellyA" x="152" y="64"/> <use href="#pMangoB" x="184" y="67"/>
+
+            <ellipse cx="120" cy="46" rx="94" ry="17.9" fill="#F9EFD5" opacity=".88"/>
+
+            <!-- pieces floating at the surface, like the real thing -->
+            <use href="#pCocoB"  x="62"  y="57"/> <use href="#pJellyB" x="98"  y="57"/> <use href="#pMangoA" x="134" y="58"/> <use href="#pCocoA"  x="170" y="56"/>
+          </g>
+
+          <!-- cup body + rim -->
+          <path d="M22 44 L44 178 Q46 193 62 193 L178 193 Q194 193 196 178 L218 44"
+                fill="none" stroke="#2B1B12" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+          <ellipse cx="120" cy="44" rx="98" ry="18" fill="none" stroke="#2B1B12" stroke-width="6"/>
+        </svg>
+
+        <div class="price-sticker">
+          <span class="amt">Rp15.000</span>
+          <span class="unit">per cup 300 ml</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= SIGNATURE: scroll-filled cup ================= -->
+<section class="build" id="build" aria-labelledby="build-title">
+  <div class="build-sticky">
+    <div class="wrap">
+      <div class="build-inner">
+
+        <div class="build-copy">
+          <span class="eyebrow"><span class="dot"></span> Proses</span>
+          <h2 id="build-title" style="margin-top:18px">Empat bahan,<br>diaduk jadi satu.</h2>
+          <p class="lede">Bukan minuman berlapis — semuanya tercampur rata, jadi tiap sendok dapat mangga, jelly, dan cream-nya sekaligus.</p>
+
+          <ul class="layer-list" id="layerList">
+            <li class="layer-item" data-layer="0">
+              <span class="swatch" style="background:#E8792D"></span>
+              <span class="txt">Mangga asli<small>Dipotong kasar biar masih kerasa gigitannya</small></span>
+            </li>
+            <li class="layer-item" data-layer="1">
+              <span class="swatch" style="background:#E8C158"></span>
+              <span class="txt">Jelly mangga<small>Kenyal, rasanya searah sama buahnya</small></span>
+            </li>
+            <li class="layer-item" data-layer="2">
+              <span class="swatch" style="background:#FFFBF0;border-color:#c9bfa6"></span>
+              <span class="txt">Jelly kelapa<small>Bening dan segar, buat nyeimbangin manisnya</small></span>
+            </li>
+            <li class="layer-item" data-layer="3">
+              <span class="swatch" style="background:#F5E7C4"></span>
+              <span class="txt">Cream mango cheese<small>Keju asli jadi krim, lalu semuanya diaduk rata</small></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="build-stage">
+          <div class="cup-wrap">
+            <svg id="buildCup" viewBox="0 0 240 226" role="img"
+                 aria-label="Cup 300 ml yang terisi saat halaman digulir: potongan mangga, jelly mangga, dan jelly kelapa muncul tercampur di dalam cream mango cheese.">
+              <defs>
+                <clipPath id="buildCupClip">
+                  <path d="M26 46 L48 176 Q50 189 62 189 L178 189 Q190 189 192 176 L214 46 Z"/>
+                </clipPath>
+              </defs>
+
+              <g clip-path="url(#buildCupClip)">
+                <!-- default = full, so it still reads correctly with JS off -->
+                <rect id="mix" x="20" y="46" width="200" height="143" fill="#F5E7C4"/>
+
+                <g id="bits">
+                  <g class="bit" data-x="72"  data-y="171" transform="translate(72 171)"><use href="#pMangoA"/></g>
+                  <g class="bit" data-x="102" data-y="168" transform="translate(102 168)"><use href="#pCocoA"/></g>
+                  <g class="bit" data-x="132" data-y="172" transform="translate(132 172)"><use href="#pJellyA"/></g>
+                  <g class="bit" data-x="162" data-y="168" transform="translate(162 168)"><use href="#pMangoB"/></g>
+
+                  <g class="bit" data-x="64"  data-y="154" transform="translate(64 154)"><use href="#pCocoB"/></g>
+                  <g class="bit" data-x="94"  data-y="151" transform="translate(94 151)"><use href="#pJellyB"/></g>
+                  <g class="bit" data-x="124" data-y="155" transform="translate(124 155)"><use href="#pMangoA"/></g>
+                  <g class="bit" data-x="154" data-y="151" transform="translate(154 151)"><use href="#pCocoA"/></g>
+                  <g class="bit" data-x="180" data-y="154" transform="translate(180 154)"><use href="#pJellyA"/></g>
+
+                  <g class="bit" data-x="58"  data-y="136" transform="translate(58 136)"><use href="#pMangoB"/></g>
+                  <g class="bit" data-x="88"  data-y="133" transform="translate(88 133)"><use href="#pCocoB"/></g>
+                  <g class="bit" data-x="118" data-y="137" transform="translate(118 137)"><use href="#pJellyB"/></g>
+                  <g class="bit" data-x="148" data-y="133" transform="translate(148 133)"><use href="#pMangoA"/></g>
+                  <g class="bit" data-x="178" data-y="136" transform="translate(178 136)"><use href="#pCocoA"/></g>
+
+                  <g class="bit" data-x="54"  data-y="118" transform="translate(54 118)"><use href="#pJellyA"/></g>
+                  <g class="bit" data-x="84"  data-y="115" transform="translate(84 115)"><use href="#pMangoB"/></g>
+                  <g class="bit" data-x="114" data-y="119" transform="translate(114 119)"><use href="#pCocoB"/></g>
+                  <g class="bit" data-x="144" data-y="115" transform="translate(144 115)"><use href="#pJellyB"/></g>
+                  <g class="bit" data-x="174" data-y="118" transform="translate(174 118)"><use href="#pMangoA"/></g>
+
+                  <g class="bit" data-x="52"  data-y="100" transform="translate(52 100)"><use href="#pCocoA"/></g>
+                  <g class="bit" data-x="82"  data-y="97"  transform="translate(82 97)"><use href="#pJellyA"/></g>
+                  <g class="bit" data-x="112" data-y="101" transform="translate(112 101)"><use href="#pMangoB"/></g>
+                  <g class="bit" data-x="142" data-y="97"  transform="translate(142 97)"><use href="#pCocoB"/></g>
+                  <g class="bit" data-x="172" data-y="100" transform="translate(172 100)"><use href="#pJellyB"/></g>
+
+                  <g class="bit" data-x="50"  data-y="82"  transform="translate(50 82)"><use href="#pMangoA"/></g>
+                  <g class="bit" data-x="80"  data-y="79"  transform="translate(80 79)"><use href="#pCocoA"/></g>
+                  <g class="bit" data-x="110" data-y="83"  transform="translate(110 83)"><use href="#pJellyA"/></g>
+                  <g class="bit" data-x="140" data-y="79"  transform="translate(140 79)"><use href="#pMangoB"/></g>
+                  <g class="bit" data-x="170" data-y="82"  transform="translate(170 82)"><use href="#pCocoB"/></g>
+
+                  <g class="bit" data-x="56"  data-y="67"  transform="translate(56 67)"><use href="#pJellyB"/></g>
+                  <g class="bit" data-x="88"  data-y="64"  transform="translate(88 64)"><use href="#pMangoA"/></g>
+                  <g class="bit" data-x="120" data-y="68"  transform="translate(120 68)"><use href="#pCocoA"/></g>
+                  <g class="bit" data-x="152" data-y="64"  transform="translate(152 64)"><use href="#pJellyA"/></g>
+                  <g class="bit" data-x="184" data-y="67"  transform="translate(184 67)"><use href="#pMangoB"/></g>
+                </g>
+
+                <ellipse id="surface" cx="120" cy="189" rx="58" ry="11" fill="#F9EFD5" opacity="0"/>
+
+                <!-- pieces floating at the surface, drawn over the cream -->
+                <g id="bitsTop">
+                  <g class="bit" data-x="62"  data-y="57" transform="translate(62 57)"><use href="#pCocoB"/></g>
+                  <g class="bit" data-x="98"  data-y="57" transform="translate(98 57)"><use href="#pJellyB"/></g>
+                  <g class="bit" data-x="134" data-y="58" transform="translate(134 58)"><use href="#pMangoA"/></g>
+                  <g class="bit" data-x="170" data-y="56" transform="translate(170 56)"><use href="#pCocoA"/></g>
+                </g>
+              </g>
+
+              <path d="M22 44 L44 178 Q46 193 62 193 L178 193 Q194 193 196 178 L218 44"
+                    fill="none" stroke="#2B1B12" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+              <ellipse cx="120" cy="44" rx="98" ry="18" fill="none" stroke="#2B1B12" stroke-width="6"/>
+            </svg>
+          </div>
+
+          <div class="rail"><div class="rail-fill" id="railFill"></div></div>
+          <span class="rail-label" id="railLabel">Cup masih kosong</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHY ============================ -->
+<section class="why-outer" aria-labelledby="why-title">
+  <div class="why">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span> Kenapa Re-Bites</span>
+      <h2 id="why-title" style="margin-top:18px">Tiga alasan yang<br>kelihatan di cup-nya.</h2>
+      <p class="lede">Bukan klaim di poster. Semuanya bisa kamu cek sendiri pas cup-nya sampai di tangan.</p>
+
+      <div class="why-grid">
+        <article class="why-card rise">
+          <span class="ico" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2B1B12" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 9-10-1 3 0 5 2 6.5S19 13 19 15c0 3.5-3 6-7 6z"/></svg>
+          </span>
+          <h3>Bahan asli, bukan perisa</h3>
+          <p>Mangga asli dan keju asli. Tanpa bubuk perisa instan dan tanpa pewarna tambahan — rasanya memang datang dari buahnya.</p>
+        </article>
+
+        <article class="why-card rise">
+          <span class="ico" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2B1B12" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          </span>
+          <h3>Fresh per pre-order</h3>
+          <p>Baru dibuat setelah pesananmu masuk, bukan diambil dari stok kemarin. Jadi cream-nya masih kental dan jelly-nya masih kenyal.</p>
+        </article>
+
+        <article class="why-card rise">
+          <span class="ico" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2B1B12" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </span>
+          <h3>Isinya padat, bukan cuma cream</h3>
+          <p>Potongan mangga, jelly mangga, dan jelly kelapa tercampur rata sampai dasar cup. Jadi sendok terakhir isinya sama penuhnya dengan yang pertama.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STEPS ============================ -->
+<section class="section" id="cara" aria-labelledby="cara-title">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> Cara pesan</span>
+    <h2 id="cara-title" style="margin-top:18px">Tiga langkah,<br>selesai di WhatsApp.</h2>
+    <p class="lede">Nggak perlu daftar akun, nggak perlu aplikasi tambahan.</p>
+
+    <div class="steps-grid">
+      <article class="step rise">
+        <span class="num">1</span>
+        <h3>Isi form pesanan</h3>
+        <p>Tulis nama kamu, jumlah cup yang mau dipesan, dan catatan tambahan kalau ada — misalnya less sugar atau titik jemputnya di mana.</p>
+        <span class="tag">± 20 detik</span>
+      </article>
+
+      <article class="step rise">
+        <span class="num">2</span>
+        <h3>Klik kirim pesanan</h3>
+        <p>Satu tombol. Semua isian tadi otomatis dirangkum jadi satu pesan yang rapi, lengkap dengan total harganya.</p>
+        <span class="tag">1 klik</span>
+      </article>
+
+      <article class="step rise">
+        <span class="num">3</span>
+        <h3>WhatsApp langsung terbuka</h3>
+        <p>Chat ke <strong>0813-2151-7339</strong> terbuka dengan pesan yang sudah terisi detail pesanan kamu. Tinggal tekan kirim, selesai.</p>
+        <span class="tag">Tinggal kirim</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ORDER ============================ -->
+<section class="section order" id="pesan" aria-labelledby="pesan-title">
+  <div class="wrap">
+    <div class="order-card">
+      <h2 id="pesan-title">Pesan sekarang</h2>
+      <p class="order-sub">Isi tiga kolom di bawah, sisanya kami rangkum otomatis buat kamu.</p>
+
+      <form id="orderForm" novalidate>
+
+        <div class="field">
+          <label for="nama">Nama kamu <span class="hint">— wajib diisi</span></label>
+          <input class="input" type="text" id="nama" name="nama" placeholder="Contoh: Rivaldo" autocomplete="name" required />
+          <p class="err" id="errNama" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+            Nama masih kosong — isi dulu ya.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="jumlah">Jumlah cup</label>
+          <div class="qty">
+            <button class="qty-btn" type="button" id="minus" aria-label="Kurangi jumlah cup">−</button>
+            <input class="input" type="number" id="jumlah" name="jumlah" value="1" min="1" max="50" step="1" inputmode="numeric" />
+            <button class="qty-btn" type="button" id="plus" aria-label="Tambah jumlah cup">+</button>
+            <span class="hint" aria-hidden="true">× Rp15.000</span>
+          </div>
+          <p class="err" id="errJumlah" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+            Jumlah minimal 1 cup, maksimal 50 cup.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="catatan">Catatan <span class="hint">— opsional</span></label>
+          <textarea class="textarea" id="catatan" name="catatan" placeholder="Less sugar, tanpa jelly, atau titik jemputnya di mana…"></textarea>
+        </div>
+
+        <div class="total-row">
+          <span class="lbl">Total bayar</span>
+          <span class="val" id="total" aria-live="polite">Rp15.000</span>
+        </div>
+
+        <button class="btn btn-primary submit" type="submit">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.4-.51.08-1.15.11-1.86-.12-.43-.13-.98-.32-1.69-.62-2.97-1.28-4.9-4.27-5.05-4.47-.15-.2-1.21-1.6-1.21-3.06s.77-2.17 1.04-2.47c.27-.3.59-.37.79-.37.2 0 .39 0 .57.01.18.01.42-.07.66.5.25.59.84 2.05.91 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.15-.3.31-.13.61.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.12.65-.07.17-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.71.81 2 .96.3.15.5.22.57.35.07.12.07.72-.18 1.41z"/></svg>
+          Kirim Pesanan via WhatsApp
+        </button>
+
+        <p class="form-foot">Tombol ini membuka WhatsApp dengan pesan yang sudah terisi otomatis.<br>Pesanan baru masuk setelah kamu tekan kirim di WhatsApp.</p>
+        <p class="fallback" id="fallback">Pop-up diblokir browser. <a id="fallbackLink" href="#" target="_blank" rel="noopener">Ketuk di sini untuk buka WhatsApp →</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h3>Re-Bites</h3>
+        <p>Cream mango cheese dengan mangga asli, jelly mangga, dan jelly kelapa. Cup 300 ml, dibuat fresh setiap ada pesanan masuk.</p>
+      </div>
+
+      <div>
+        <p class="cap">Kontak</p>
+        <a class="wa" href="https://wa.me/6281321517339" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+          0813-2151-7339
+        </a>
+      </div>
+
+      <div>
+        <p class="cap">Sosial media</p>
+        <div class="soc-row">
+          <a class="soc soc-live" href="https://instagram.com/rebites.co" target="_blank" rel="noopener">Instagram — @rebites.co</a>
+          <span class="soc">TikTok — segera</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-base">
+      <span>© <span id="year">2026</span> Re-Bites</span>
+      <span>Rp15.000 / cup · Fresh per pre-order</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ==========================================================
+     1) SIGNATURE — scroll-scrubbed layered fill
+     ========================================================== */
+  // 300 ml dessert tub: wide mouth, only a gentle taper toward the base
+  var CUP_TOP = 46, CUP_BOTTOM = 189;
+  var CUP_H = CUP_BOTTOM - CUP_TOP;            // 143
+  var W_BOTTOM = 116, W_TOP = 188;             // inner cup widths
+  var PERSPECTIVE = 0.19;                      // surface ellipse ry : rx
+
+  // the cup is one homogeneous mixture, so these are the order the
+  // ingredients go in — not layers stacked on top of each other
+  var STEPS = [
+    { at: 0.06, label: "Mangga asli masuk" },
+    { at: 0.28, label: "Jelly mangga masuk" },
+    { at: 0.50, label: "Jelly kelapa masuk" },
+    { at: 0.72, label: "Cream mango cheese diaduk" }
+  ];
+
+  var section = document.getElementById("build");
+  var mix     = document.getElementById("mix");
+  var surface = document.getElementById("surface");
+  var bits    = Array.prototype.slice.call(document.querySelectorAll(".bit")).map(function (el) {
+    return { el: el, x: +el.getAttribute("data-x"), y: +el.getAttribute("data-y") };
+  });
+  var railFill = document.getElementById("railFill");
+  var railLbl  = document.getElementById("railLabel");
+  var chips    = Array.prototype.slice.call(document.querySelectorAll(".layer-item"));
+
+  function render(p) {
+    var h = p * CUP_H;                 // filled height in SVG units
+    var fillTopY = CUP_BOTTOM - h;
+
+    // one rising body of mixture
+    mix.setAttribute("y", fillTopY.toFixed(2));
+    mix.setAttribute("height", h.toFixed(2));
+
+    // each piece pops in as the mixture rises past it
+    for (var i = 0; i < bits.length; i++) {
+      var b = bits[i];
+      var o = clamp((b.y - fillTopY) / 14, 0, 1);
+      var s = 0.55 + 0.45 * o;
+      b.el.setAttribute("opacity", o.toFixed(3));
+      b.el.setAttribute("transform",
+        "translate(" + b.x + " " + b.y + ") scale(" + s.toFixed(3) + ")");
+    }
+
+    // surface follows the fill line, widening as the cup tapers outward
+    if (p > 0.004) {
+      var rx = (W_BOTTOM + (h / CUP_H) * (W_TOP - W_BOTTOM)) / 2;
+      surface.setAttribute("cy", fillTopY.toFixed(2));
+      surface.setAttribute("rx", rx.toFixed(2));
+      surface.setAttribute("ry", (rx * PERSPECTIVE).toFixed(2));
+      // slightly translucent so the topmost pieces ghost through the cream
+      surface.setAttribute("opacity", "0.85");
+    } else {
+      surface.setAttribute("opacity", "0");
+    }
+
+    // chips + rail
+    for (var c = 0; c < chips.length; c++) {
+      chips[c].classList.toggle("on", p >= STEPS[c].at);
+    }
+    railFill.style.width = (p * 100).toFixed(1) + "%";
+
+    if (p < STEPS[0].at) railLbl.textContent = "Cup masih kosong";
+    else if (p >= 0.99)  railLbl.textContent = "Siap diantar 🥭";
+    else {
+      var cur = STEPS[0];
+      for (var m = 0; m < STEPS.length; m++) { if (p >= STEPS[m].at) cur = STEPS[m]; }
+      railLbl.textContent = cur.label;
+    }
+  }
+
+  if (reduce) {
+    render(1);
+  } else {
+    var ticking = false;
+
+    function update() {
+      var rect  = section.getBoundingClientRect();
+      var range = section.offsetHeight - window.innerHeight;
+      var raw   = range > 0 ? clamp(-rect.top / range, 0, 1) : 0;
+      // lead-in, then a short beat to hold the finished cup at the end
+      render(clamp((raw - 0.05) / 0.83, 0, 1));
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; update(); });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    // if the page loads in a background tab rAF is suspended, which would
+    // otherwise leave `ticking` latched on and kill the fill for good
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) { ticking = false; update(); }
+    });
+
+    update(); // paint once synchronously; never gated behind a frame
+  }
+
+  /* ==========================================================
+     2) Calm reveals for the rest of the page
+     ========================================================== */
+  var risers = document.querySelectorAll(".rise");
+  if (reduce || !("IntersectionObserver" in window)) {
+    for (var r = 0; r < risers.length; r++) risers[r].classList.add("in");
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e, i) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        setTimeout(function () { el.classList.add("in"); }, i * 70);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+    for (var q = 0; q < risers.length; q++) io.observe(risers[q]);
+  }
+
+  /* ==========================================================
+     3) Order form → prefilled WhatsApp (100% client side)
+     ========================================================== */
+  var PRICE = 15000;
+  var WA_NUMBER = "6281321517339";
+
+  var form     = document.getElementById("orderForm");
+  var nama     = document.getElementById("nama");
+  var jumlah   = document.getElementById("jumlah");
+  var catatan  = document.getElementById("catatan");
+  var totalEl  = document.getElementById("total");
+  var errNama  = document.getElementById("errNama");
+  var errJml   = document.getElementById("errJumlah");
+  var fallback = document.getElementById("fallback");
+  var fbLink   = document.getElementById("fallbackLink");
+
+  function rupiah(n) { return "Rp" + n.toLocaleString("id-ID"); }
+  function qty() {
+    var n = parseInt(jumlah.value, 10);
+    return isNaN(n) ? 0 : n;
+  }
+  function syncTotal() { totalEl.textContent = rupiah(Math.max(0, qty()) * PRICE); }
+
+  document.getElementById("minus").addEventListener("click", function () {
+    jumlah.value = Math.max(1, qty() - 1); syncTotal(); clearErr();
+  });
+  document.getElementById("plus").addEventListener("click", function () {
+    jumlah.value = Math.min(50, qty() + 1); syncTotal(); clearErr();
+  });
+  jumlah.addEventListener("input", function () { syncTotal(); });
+  nama.addEventListener("input", clearErr);
+
+  function clearErr() {
+    errNama.classList.remove("show"); nama.removeAttribute("aria-invalid");
+    errJml.classList.remove("show");  jumlah.removeAttribute("aria-invalid");
+    fallback.classList.remove("show");
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    clearErr();
+
+    var ok = true;
+    var n = nama.value.trim();
+    var q = qty();
+
+    if (!n) {
+      errNama.classList.add("show");
+      nama.setAttribute("aria-invalid", "true");
+      nama.focus();
+      ok = false;
+    }
+    if (q < 1 || q > 50) {
+      errJml.classList.add("show");
+      jumlah.setAttribute("aria-invalid", "true");
+      if (ok) jumlah.focus();
+      ok = false;
+    }
+    if (!ok) return;
+
+    var note = catatan.value.trim();
+    var lines = [
+      "Halo Re-Bites! Saya mau pesan Mango Cheese Milk.",
+      "",
+      "Nama    : " + n,
+      "Jumlah  : " + q + " cup",
+      "Catatan : " + (note ? note : "-"),
+      "Total   : " + rupiah(q * PRICE),
+      "",
+      "Terima kasih!"
+    ];
+
+    var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+    var win = window.open(url, "_blank", "noopener");
+
+    // popup blocked → surface a tappable link instead of failing silently
+    if (!win) {
+      fbLink.href = url;
+      fallback.classList.add("show");
+    }
+  });
+
+  syncTotal();
+})();
+</script>
+</body>
+</html>
