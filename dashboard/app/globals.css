@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+/* Palet mengikuti brand Re-Bites (mango, cheese, leaf, coffee, ivory). */
+@theme {
+  --color-ivory: #fff8ec;
+  --color-ivory-deep: #fbebd2;
+  --color-milk: #fffdf7;
+  --color-mango: #e8792d;
+  --color-mango-deep: #c85f19;
+  --color-cheese: #d9a62e;
+  --color-leaf: #1f4d3d;
+  --color-leaf-deep: #153629;
+  --color-coffee: #2b1b12;
+  --color-danger: #c0392b;
+
+  --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-coffee);
+    -webkit-font-smoothing: antialiased;
+    /* Ruang untuk bottom-nav di HP. */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Input di HP: minimal 16px supaya iOS tidak auto-zoom saat fokus. */
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-coffee/10 bg-milk p-4 shadow-[0_1px_2px_rgba(43,27,18,0.06)];
+  }
+
+  .label {
+    @apply mb-1 block text-xs font-semibold tracking-wide text-coffee/60 uppercase;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-coffee/15 bg-white px-3 py-3 text-coffee outline-none transition focus:border-mango focus:ring-2 focus:ring-mango/25;
+  }
+
+  .btn-primary {
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-xl bg-mango px-4 py-3 font-semibold text-white transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-coffee/15 bg-white px-3 py-2 text-sm font-semibold text-coffee transition active:scale-[0.99] disabled:opacity-60;
+  }
+}
