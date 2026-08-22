@@ -106,7 +106,6 @@ export default function BatchForm({ onSubmit }: Props) {
             onChange={setTotalCost}
             placeholder="250000"
             prefix="Rp"
-            step={1000}
           />
         </Field>
 
