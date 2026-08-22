@@ -1,11 +1,14 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   BarChart3,
+  ClipboardList,
   CloudOff,
   Coins,
   History,
+  LogOut,
   Monitor,
   Moon,
   PlusCircle,
@@ -22,23 +25,24 @@ import { useTheme } from '@/hooks/useTheme';
 import { angka, namaBulan, rupiah } from '@/lib/format';
 import BatchForm from './BatchForm';
 import BatchQueue from './BatchQueue';
-import BepProgress from './BepProgress';
 import EmptyState from './EmptyState';
 import ExpenseForm from './ExpenseForm';
 import HealthBadge from './HealthBadge';
 import HistoryTable from './HistoryTable';
 import MetricCard from './MetricCard';
+import PoBoard from './PoBoard';
 import RevenueChart from './RevenueChart';
 import SaleForm from './SaleForm';
 import Skeleton from './Skeleton';
 import Toast, { type ToastState } from './Toast';
 import { Notice } from './ui';
 
-type Tab = 'ringkasan' | 'input' | 'riwayat';
+type Tab = 'ringkasan' | 'input' | 'po' | 'riwayat';
 
 const TABS: { key: Tab; label: string; Icon: typeof BarChart3 }[] = [
   { key: 'ringkasan', label: 'Ringkasan', Icon: BarChart3 },
   { key: 'input', label: 'Input', Icon: PlusCircle },
+  { key: 'po', label: 'PO', Icon: ClipboardList },
   { key: 'riwayat', label: 'Riwayat', Icon: History },
 ];
 
@@ -48,7 +52,7 @@ const DELETE_LABEL: Record<EntityKind, string> = {
   expense: 'Pengeluaran dihapus',
 };
 
-export default function Dashboard() {
+export default function Dashboard({ authEnabled = false }: { authEnabled?: boolean }) {
   const {
     snapshot,
     loading,
@@ -64,10 +68,11 @@ export default function Dashboard() {
     dismissError,
   } = useDashboard();
   const { pref, cycle } = useTheme();
+  const router = useRouter();
   const [tab, setTab] = useState<Tab>('ringkasan');
   const [toast, setToast] = useState<ToastState | null>(null);
 
-  const { metrics, bep, chart } = snapshot;
+  const { metrics, chart } = snapshot;
   const proyeksi = chart.length > 0 ? (chart[chart.length - 1].proyeksi ?? 0) : 0;
 
   const showToast = useCallback((next: Omit<ToastState, 'id'>) => {
@@ -100,6 +105,16 @@ export default function Dashboard() {
     },
     [remove, showToast, snapshot, submit],
   );
+
+  const logout = useCallback(async () => {
+    try {
+      await fetch('/api/login', { method: 'DELETE' });
+    } catch {
+      // Offline: cookie tetap dihapus saat request berhasil nanti.
+    }
+    router.replace('/login');
+    router.refresh();
+  }, [router]);
 
   const ThemeIcon = pref === 'light' ? Sun : pref === 'dark' ? Moon : Monitor;
   const themeLabel =
@@ -146,6 +161,11 @@ export default function Dashboard() {
                 <RefreshCw className={`h-4 w-4 ${syncing ? 'animate-spin' : ''}`} aria-hidden />
                 {syncing ? 'Sinkron…' : 'Sinkron'}
               </button>
+              {authEnabled ? (
+                <button type="button" onClick={() => void logout()} className="btn-ghost px-2.5" aria-label="Keluar">
+                  <LogOut className="h-4 w-4" aria-hidden />
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
@@ -250,10 +270,7 @@ export default function Dashboard() {
 
           <RevenueChart data={chart} bulan={namaBulan()} proyeksiAkhirBulan={proyeksi} />
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            <BepProgress bep={bep} />
-            <BatchQueue batches={snapshot.batches} onDelete={(id) => handleDelete('batch', id)} />
-          </div>
+          <BatchQueue batches={snapshot.batches} onDelete={(id) => handleDelete('batch', id)} />
         </section>
       ) : null}
 
@@ -270,6 +287,11 @@ export default function Dashboard() {
           <BatchForm onSubmit={handleSubmit('batch', 'Input batch belanja')} />
           <ExpenseForm onSubmit={handleSubmit('expense', 'Input pengeluaran')} />
         </div>
+      </section>
+
+      {/* ------------------------------------------------------------ PO */}
+      <section className={`${tab === 'po' ? 'block' : 'hidden'} mt-0 space-y-4 lg:mt-4 lg:block`}>
+        <PoBoard onChanged={() => void refresh('read')} />
       </section>
 
       {/* ------------------------------------------------------- riwayat */}
