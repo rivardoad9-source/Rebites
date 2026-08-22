@@ -58,19 +58,19 @@ export default function HistoryTable({
   return (
     <section className="card">
       <header className="mb-3 flex items-center gap-2">
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-coffee/5 text-coffee">
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-ink/5 text-ink">
           <CalendarRange className="h-4 w-4" aria-hidden />
         </span>
         <div>
-          <h2 className="text-base leading-tight font-bold text-coffee">Riwayat Transaksi</h2>
-          <p className="text-xs text-coffee/55">
+          <h2 className="text-base leading-tight font-bold text-ink">Riwayat Transaksi</h2>
+          <p className="text-xs text-ink/55">
             {tanggal(from)} – {tanggal(to)}
           </p>
         </div>
       </header>
 
       <div className="mb-3 grid grid-cols-2 gap-2">
-        <label className="text-xs font-semibold text-coffee/60">
+        <label className="text-xs font-semibold text-ink/60">
           Dari
           <input
             type="date"
@@ -80,7 +80,7 @@ export default function HistoryTable({
             className="field mt-1"
           />
         </label>
-        <label className="text-xs font-semibold text-coffee/60">
+        <label className="text-xs font-semibold text-ink/60">
           Sampai
           <input
             type="date"
@@ -99,7 +99,7 @@ export default function HistoryTable({
         <RangeChip label="Semua" onClick={() => { setFrom('2000-01-01'); setTo('2999-12-31'); }} />
       </div>
 
-      <div className="mb-3 grid grid-cols-2 gap-2 rounded-xl bg-ivory px-3 py-2 text-sm sm:grid-cols-4">
+      <div className="mb-3 grid grid-cols-2 gap-2 rounded-xl bg-well px-3 py-2 text-sm sm:grid-cols-4">
         <Total label="Cup" value={angka(total.cups)} />
         <Total label="Omzet" value={rupiah(total.omzet)} />
         <Total label="HPP + OPEX" value={rupiah(total.hpp + total.opex)} />
@@ -107,7 +107,7 @@ export default function HistoryTable({
       </div>
 
       <div
-        className="mb-3 flex gap-1 rounded-xl bg-coffee/5 p-1"
+        className="mb-3 flex gap-1 rounded-xl bg-ink/5 p-1"
         role="tablist"
         aria-label="Jenis riwayat"
       >
@@ -119,7 +119,7 @@ export default function HistoryTable({
             aria-selected={tab === t.key}
             onClick={() => setTab(t.key)}
             className={`flex-1 rounded-lg px-2 py-2 text-sm font-semibold transition ${
-              tab === t.key ? 'bg-white text-coffee shadow-sm' : 'text-coffee/55'
+              tab === t.key ? 'bg-field text-ink shadow-sm' : 'text-ink/55'
             }`}
           >
             {t.label}
@@ -134,7 +134,7 @@ export default function HistoryTable({
             empty={daily.length === 0}
           >
             {daily.map((r) => (
-              <tr key={r.date} className="border-t border-coffee/8">
+              <tr key={r.date} className="border-t border-ink/8">
                 <Td>{tanggalPendek(r.date)}</Td>
                 <Td numeric>{angka(r.cups)}</Td>
                 <Td numeric>{rupiah(r.omzet)}</Td>
@@ -154,10 +154,10 @@ export default function HistoryTable({
             empty={sales.length === 0}
           >
             {sales.map((s) => (
-              <tr key={s.id} className="border-t border-coffee/8">
+              <tr key={s.id} className="border-t border-ink/8">
                 <Td>
                   {tanggalPendek(s.date)}
-                  {s.channel ? <span className="block text-[11px] text-coffee/45">{s.channel}</span> : null}
+                  {s.channel ? <span className="block text-[11px] text-ink/45">{s.channel}</span> : null}
                 </Td>
                 <Td numeric>{angka(s.cups)}</Td>
                 <Td numeric>{rupiah(s.pricePerCup)}</Td>
@@ -165,7 +165,7 @@ export default function HistoryTable({
                 <Td numeric>
                   {rupiah(s.cogs)}
                   {s.shortageCups > 0 ? (
-                    <span className="block text-[11px] text-amber-700">
+                    <span className="block text-[11px] text-warn">
                       {s.shortageCups} cup tanpa batch
                     </span>
                   ) : null}
@@ -187,12 +187,12 @@ export default function HistoryTable({
         {tab === 'opex' ? (
           <Table head={['Tanggal', 'Kategori', 'Nominal', 'Catatan', '']} empty={expenses.length === 0}>
             {expenses.map((e) => (
-              <tr key={e.id} className="border-t border-coffee/8">
+              <tr key={e.id} className="border-t border-ink/8">
                 <Td>{tanggalPendek(e.date)}</Td>
                 <Td>{e.category}</Td>
                 <Td numeric>{rupiah(e.amount)}</Td>
                 <Td>
-                  <span className="text-coffee/55">{e.note ?? '—'}</span>
+                  <span className="text-ink/55">{e.note ?? '—'}</span>
                 </Td>
                 <Td>
                   <DeleteButton
@@ -220,7 +220,7 @@ function Table({
 }) {
   if (empty) {
     return (
-      <p className="rounded-xl bg-ivory px-3 py-6 text-center text-sm text-coffee/55">
+      <p className="rounded-xl bg-well px-3 py-6 text-center text-sm text-ink/55">
         Belum ada data di rentang tanggal ini.
       </p>
     );
@@ -229,7 +229,7 @@ function Table({
   return (
     <table className="w-full min-w-[520px] text-sm">
       <thead>
-        <tr className="text-left text-[11px] tracking-wide text-coffee/50 uppercase">
+        <tr className="text-left text-[11px] tracking-wide text-ink/50 uppercase">
           {head.map((h, i) => (
             <th key={`${h}-${i}`} className="pb-2 font-semibold">
               {h}
@@ -251,7 +251,7 @@ function Td({
   numeric?: boolean;
   tone?: 'neutral' | 'good' | 'danger';
 }) {
-  const tones = { neutral: 'text-coffee', good: 'text-emerald-700', danger: 'text-red-700' } as const;
+  const tones = { neutral: 'text-ink', good: 'text-good', danger: 'text-bad' } as const;
   return (
     <td className={`py-2 pr-3 ${numeric ? 'tabular-nums' : ''} ${tones[tone]}`}>{children}</td>
   );
@@ -263,7 +263,7 @@ function DeleteButton({ label, onClick }: { label: string; onClick: () => void }
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="rounded-lg p-1.5 text-coffee/40 transition hover:bg-red-50 hover:text-red-600"
+      className="rounded-lg p-1.5 text-ink/40 transition hover:bg-bad-soft hover:text-bad"
     >
       <Trash2 className="h-4 w-4" aria-hidden />
     </button>
@@ -275,7 +275,7 @@ function RangeChip({ label, onClick }: { label: string; onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="rounded-full border border-coffee/15 bg-white px-3 py-1.5 text-xs font-semibold text-coffee/75 active:scale-[0.98]"
+      className="rounded-full border border-ink/15 bg-field px-3 py-1.5 text-xs font-semibold text-ink/75 active:scale-[0.98]"
     >
       {label}
     </button>
@@ -291,10 +291,10 @@ function Total({
   value: string;
   tone?: 'neutral' | 'good' | 'danger';
 }) {
-  const tones = { neutral: 'text-coffee', good: 'text-emerald-700', danger: 'text-red-700' } as const;
+  const tones = { neutral: 'text-ink', good: 'text-good', danger: 'text-bad' } as const;
   return (
     <div>
-      <p className="text-[11px] tracking-wide text-coffee/55 uppercase">{label}</p>
+      <p className="text-[11px] tracking-wide text-ink/55 uppercase">{label}</p>
       <p className={`text-sm font-extrabold tabular-nums ${tones[tone]}`}>{value}</p>
     </div>
   );

@@ -19,7 +19,7 @@ export function Field({
         {label}
       </label>
       {children}
-      {hint ? <p className="mt-1 text-xs text-coffee/55">{hint}</p> : null}
+      {hint ? <p className="mt-1 text-xs text-ink/55">{hint}</p> : null}
     </div>
   );
 }
@@ -47,7 +47,7 @@ export function NumberInput({
   return (
     <div className="relative">
       {prefix ? (
-        <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-sm font-semibold text-coffee/45">
+        <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-sm font-semibold text-ink/45">
           {prefix}
         </span>
       ) : null}
@@ -64,7 +64,7 @@ export function NumberInput({
         className={`field tabular-nums ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-14' : ''}`}
       />
       {suffix ? (
-        <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm font-semibold text-coffee/45">
+        <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm font-semibold text-ink/45">
           {suffix}
         </span>
       ) : null}
@@ -88,7 +88,7 @@ export function QuickPicks({
           key={value}
           type="button"
           onClick={() => onPick(value)}
-          className="rounded-full border border-coffee/15 bg-white px-3 py-1.5 text-sm font-semibold text-coffee/80 active:scale-[0.98]"
+          className="rounded-full border border-ink/15 bg-field px-3 py-1.5 text-sm font-semibold text-ink/80 active:scale-[0.98]"
         >
           {format(value)}
         </button>
@@ -113,8 +113,8 @@ export function FormCard({
       <header className="mb-4 flex items-start gap-2">
         {icon}
         <div>
-          <h2 className="text-base leading-tight font-bold text-coffee">{title}</h2>
-          {description ? <p className="text-xs text-coffee/55">{description}</p> : null}
+          <h2 className="text-base leading-tight font-bold text-ink">{title}</h2>
+          {description ? <p className="text-xs text-ink/55">{description}</p> : null}
         </div>
       </header>
       {children}
@@ -130,10 +130,10 @@ export function Notice({
   children: ReactNode;
 }) {
   const tones = {
-    info: 'bg-coffee/5 text-coffee/80 border-coffee/10',
-    success: 'bg-emerald-50 text-emerald-900 border-emerald-200',
-    warning: 'bg-amber-50 text-amber-900 border-amber-200',
-    error: 'bg-red-50 text-red-800 border-red-200',
+    info: 'bg-ink/5 text-ink/80 border-ink/10',
+    success: 'bg-good-soft text-good border-good/30',
+    warning: 'bg-warn-soft text-warn border-warn/30',
+    error: 'bg-bad-soft text-bad border-bad/30',
   } as const;
 
   return (

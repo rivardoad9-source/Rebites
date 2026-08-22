@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FFF8EC',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FFF8EC' },
+    { media: '(prefers-color-scheme: dark)', color: '#14100D' },
+  ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -18,7 +21,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
+      <head>
+        {/*
+          Pasang tema sebelum paint pertama supaya tidak ada kedip putih waktu
+          dashboard dibuka malam-malam di booth.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('mango-pos:theme:v1');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t)}}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

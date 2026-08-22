@@ -137,7 +137,7 @@ export default function SaleForm({ batches, defaultPrice, onSubmit }: Props) {
           </Field>
         </div>
 
-        <dl className="grid grid-cols-3 gap-2 rounded-xl bg-ivory px-3 py-3 text-center">
+        <dl className="grid grid-cols-3 gap-2 rounded-xl bg-well px-3 py-3 text-center">
           <Preview label="Omzet" value={rupiah(omzet)} />
           <Preview label="HPP FIFO" value={rupiah(preview.cogs)} />
           <Preview
@@ -155,7 +155,7 @@ export default function SaleForm({ batches, defaultPrice, onSubmit }: Props) {
         ) : null}
 
         {preview.allocations.length > 0 ? (
-          <ul className="space-y-1 text-xs text-coffee/60">
+          <ul className="space-y-1 text-xs text-ink/60">
             {preview.allocations.map((a) => (
               <li key={`${a.batchId}-${a.cups}`} className="flex justify-between gap-2">
                 <span className="truncate">
@@ -188,13 +188,13 @@ function Preview({
   tone?: 'neutral' | 'good' | 'danger';
 }) {
   const tones = {
-    neutral: 'text-coffee',
-    good: 'text-emerald-700',
-    danger: 'text-red-700',
+    neutral: 'text-ink',
+    good: 'text-good',
+    danger: 'text-bad',
   } as const;
   return (
     <div>
-      <dt className="text-[11px] tracking-wide text-coffee/55 uppercase">{label}</dt>
+      <dt className="text-[11px] tracking-wide text-ink/55 uppercase">{label}</dt>
       <dd className={`text-sm font-extrabold tabular-nums ${tones[tone]}`}>{value}</dd>
     </div>
   );

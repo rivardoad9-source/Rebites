@@ -57,9 +57,17 @@ Recharts · googleapis.
   `(belanja batch ACTIVE + total OPEX) ÷ margin per cup`.
 
 ### UI/UX & teknis
-- Mobile-first: layout satu kolom, bottom nav, tombol pintas jumlah cup dan
-  nominal, input `inputmode="numeric"` (keypad angka), font 16px supaya iOS
-  tidak auto-zoom.
+- Mobile-first: layout satu kolom, header sticky, bottom nav, tombol pintas
+  jumlah cup dan nominal, input `inputmode="numeric"` (keypad angka), font 16px
+  supaya iOS tidak auto-zoom.
+- Mode terang/gelap: ikut setelan HP secara otomatis (siang terang, malam
+  gelap), bisa dikunci manual lewat tombol tema dan diingat di `localStorage`.
+  Warna seri grafik punya dua set — masing-masing sudah diverifikasi kontras
+  dan keterbacaannya untuk buta warna terhadap latar mode-nya.
+- Hapus transaksi tidak pakai dialog konfirmasi: langsung jalan, lalu muncul
+  toast **Urungkan** selama 7 detik.
+- Empty state berisi panduan tiga langkah saat data masih kosong, dan skeleton
+  saat snapshot pertama dimuat.
 - Semua rupiah dibulatkan dengan `Math.round()` dan disimpan sebagai integer.
 - Fallback koneksi lambat/putus di booth:
   - snapshot terakhir di-cache di `localStorage` → layar langsung terisi;
@@ -182,8 +190,10 @@ dashboard/
 ├─ app/
 │  ├─ api/{sync,batches,sales,expenses}/route.ts   # REST + webhook
 │  ├─ layout.tsx · globals.css · page.tsx
-├─ components/            # UI (form, chart, tabel, kartu metrik)
-├─ hooks/useDashboard.ts  # cache lokal, antrean offline, polling
+├─ components/            # UI (form, chart, tabel, kartu metrik, toast)
+├─ hooks/
+│  ├─ useDashboard.ts     # cache lokal, antrean offline, polling
+│  └─ useTheme.ts         # store tema terang/gelap lintas komponen
 ├─ lib/
 │  ├─ fifo.ts             # FIFO engine (murni, tanpa I/O)
 │  ├─ metrics.ts          # metrik, health, chart, BEP
