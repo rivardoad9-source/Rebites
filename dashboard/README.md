@@ -56,6 +56,19 @@ Recharts · googleapis.
 - BEP progress bar: cup terjual vs titik balik modal
   `(belanja batch ACTIVE + total OPEX) ÷ margin per cup`.
 
+### Kunci password
+- Isi env `APP_PASSWORD` untuk mengunci seluruh dashboard: halaman diarahkan ke
+  `/login`, dan seluruh endpoint API membalas `401` tanpa sesi yang sah.
+- Password tidak pernah ditulis di kode, dan cookie sesi hanya menyimpan hash
+  SHA-256 dari password — jadi isi cookie tidak bisa dipakai menebak balik
+  passwordnya, dan sesi lama otomatis gugur begitu passwordnya diganti.
+- Sesi berlaku 30 hari per perangkat (cookie `httpOnly`), dengan tombol
+  **Keluar** di header.
+- Webhook `POST /api/sync` dari Apps Script tetap bisa masuk tanpa sesi selama
+  membawa `SYNC_SECRET` yang benar.
+- Kalau `APP_PASSWORD` dikosongkan, dashboard terbuka tanpa kunci (praktis saat
+  `npm run dev`).
+
 ### UI/UX & teknis
 - Mobile-first: layout satu kolom, header sticky, bottom nav, tombol pintas
   jumlah cup dan nominal, input `inputmode="numeric"` (keypad angka), font 16px
@@ -116,6 +129,7 @@ npm test           # unit test FIFO, metrik, BEP, proyeksi, parser
    GOOGLE_CLIENT_EMAIL=mango-pos@project-id.iam.gserviceaccount.com
    GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n"
    SYNC_SECRET=rahasia-bebas
+   APP_PASSWORD=password-untuk-buka-dashboard
    ```
 
    `GOOGLE_PRIVATE_KEY` boleh ditulis satu baris dengan literal `\n` — aplikasi
@@ -169,6 +183,7 @@ tersebut (Script properties `DASHBOARD_URL` + `SYNC_SECRET`, lalu jalankan
 | `/api/batches` | `GET` `POST` `DELETE` | Batch belanja bahan baku |
 | `/api/sales` | `GET` `POST` `DELETE` | Penjualan harian |
 | `/api/expenses` | `GET` `POST` `PATCH` `DELETE` | Pengeluaran operasional |
+| `/api/login` | `POST` `DELETE` | Masuk (pasang cookie sesi) dan keluar |
 
 Contoh:
 
@@ -188,8 +203,10 @@ round-trip untuk update seluruh angka.
 ```
 dashboard/
 ├─ app/
-│  ├─ api/{sync,batches,sales,expenses}/route.ts   # REST + webhook
+│  ├─ api/{sync,batches,sales,expenses,login}/route.ts   # REST + webhook + sesi
+│  ├─ login/page.tsx      # halaman kunci password
 │  ├─ layout.tsx · globals.css · page.tsx
+├─ middleware.ts          # gerbang password untuk semua halaman & API
 ├─ components/            # UI (form, chart, tabel, kartu metrik, toast)
 ├─ hooks/
 │  ├─ useDashboard.ts     # cache lokal, antrean offline, polling
@@ -199,6 +216,7 @@ dashboard/
 │  ├─ metrics.ts          # metrik, health, chart, BEP
 │  ├─ derive.ts           # data mentah -> seluruh angka dashboard
 │  ├─ parse.ts            # normalisasi rupiah/tanggal/kategori
+│  ├─ auth.ts             # kunci password (hash cookie, tanpa simpan password)
 │  ├─ sheets.ts           # wrapper googleapis
 │  ├─ store.ts            # Sheets ↔ fallback lokal
 │  └─ snapshot.ts · types.ts · format.ts · api.ts
@@ -218,7 +236,7 @@ Vercel (atau host Node lain):
 
 1. Import repo, set **Root Directory** ke `dashboard`.
 2. Isi environment variables `GOOGLE_SHEET_ID`, `GOOGLE_CLIENT_EMAIL`,
-   `GOOGLE_PRIVATE_KEY`, `SYNC_SECRET`.
+   `GOOGLE_PRIVATE_KEY`, `SYNC_SECRET`, dan `APP_PASSWORD`.
 3. Deploy, lalu isi `DASHBOARD_URL` di Script properties Apps Script dengan URL
    hasil deploy.
 

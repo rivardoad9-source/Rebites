@@ -1,11 +1,13 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   BarChart3,
   CloudOff,
   Coins,
   History,
+  LogOut,
   Monitor,
   Moon,
   PlusCircle,
@@ -48,7 +50,7 @@ const DELETE_LABEL: Record<EntityKind, string> = {
   expense: 'Pengeluaran dihapus',
 };
 
-export default function Dashboard() {
+export default function Dashboard({ authEnabled = false }: { authEnabled?: boolean }) {
   const {
     snapshot,
     loading,
@@ -64,6 +66,7 @@ export default function Dashboard() {
     dismissError,
   } = useDashboard();
   const { pref, cycle } = useTheme();
+  const router = useRouter();
   const [tab, setTab] = useState<Tab>('ringkasan');
   const [toast, setToast] = useState<ToastState | null>(null);
 
@@ -100,6 +103,16 @@ export default function Dashboard() {
     },
     [remove, showToast, snapshot, submit],
   );
+
+  const logout = useCallback(async () => {
+    try {
+      await fetch('/api/login', { method: 'DELETE' });
+    } catch {
+      // Offline: cookie tetap dihapus saat request berhasil nanti.
+    }
+    router.replace('/login');
+    router.refresh();
+  }, [router]);
 
   const ThemeIcon = pref === 'light' ? Sun : pref === 'dark' ? Moon : Monitor;
   const themeLabel =
@@ -146,6 +159,11 @@ export default function Dashboard() {
                 <RefreshCw className={`h-4 w-4 ${syncing ? 'animate-spin' : ''}`} aria-hidden />
                 {syncing ? 'Sinkron…' : 'Sinkron'}
               </button>
+              {authEnabled ? (
+                <button type="button" onClick={() => void logout()} className="btn-ghost px-2.5" aria-label="Keluar">
+                  <LogOut className="h-4 w-4" aria-hidden />
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
