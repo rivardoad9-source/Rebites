@@ -34,6 +34,25 @@ Recharts · googleapis.
 - Tabel riwayat (rekap harian / penjualan / OPEX) dengan filter rentang tanggal
   plus pintasan Hari ini · 7 hari · Bulan ini · Semua.
 
+### Catatan PO (tab PO)
+- Tab **PO** di dashboard adalah cerminan tab "List PO" di spreadsheet, dengan
+  kolom yang sama persis: No, Nama, Jumlah Cup, Harga per Cup, Total Bayar,
+  Status Bayar, Notes. Jadi satu pesanan bisa dicatat dari mana saja — lewat
+  HP atau langsung di Sheets — dan hasilnya baris yang sama.
+- Pesanan baru mengisi slot bernomor yang masih kosong (bukan ditumpuk di bawah
+  baris TOTAL), status Lunas/Belum bisa diketuk untuk diubah, dan menghapus
+  pesanan mengosongkan isinya tanpa merusak penomoran. Baris TOTAL diperbarui
+  memakai rumus `SUM` supaya tetap hidup saat diedit manual.
+- Tombol **Batch baru** membuat tab PO baru memakai template yang sama.
+- Setiap batch PO diringkas otomatis jadi baris penjualan di tab `Sales`:
+  dikelompokkan per harga jual (mis. 7 cup @14.000 dan 15 cup @15.000 jadi dua
+  baris), hanya yang berstatus **Lunas**, dengan ID deterministik `po_<tab>_<harga>`
+  supaya impor berulang memperbarui baris yang sama — bukan menggandakan.
+  Pesanan yang bertambah menambah cup pada baris itu; batch yang dihapus ikut
+  dibersihkan dari `Sales`. Baris penjualan yang diinput manual tidak disentuh.
+- Set `PO_IMPORT_INCLUDE_UNPAID=true` kalau pesanan yang belum lunas juga mau
+  dihitung sebagai omzet, atau `PO_IMPORT=off` untuk mematikan fitur ini.
+
 ### Google Sheets two-way sync
 - **READ** — dashboard membaca tab `Batches`, `Sales`, dan `Expenses`.
 - **WRITE** — setiap input dari UI langsung `append`/`update`/`delete` baris di
@@ -181,6 +200,7 @@ tersebut (Script properties `DASHBOARD_URL` + `SYNC_SECRET`, lalu jalankan
 | `/api/batches` | `GET` `POST` `DELETE` | Batch belanja bahan baku |
 | `/api/sales` | `GET` `POST` `DELETE` | Penjualan harian |
 | `/api/expenses` | `GET` `POST` `PATCH` `DELETE` | Pengeluaran operasional |
+| `/api/po` | `GET` `POST` `PATCH` `DELETE` | Catatan PO per pemesan + buat batch baru |
 | `/api/login` | `POST` `DELETE` | Masuk (pasang cookie sesi) dan keluar |
 
 Contoh:
@@ -214,6 +234,9 @@ dashboard/
 │  ├─ metrics.ts          # metrik, health, chart
 │  ├─ derive.ts           # data mentah -> seluruh angka dashboard
 │  ├─ parse.ts            # normalisasi rupiah/tanggal/kategori
+│  ├─ poImport.ts         # baca tab PO + rencana penulisan barisnya (murni)
+│  ├─ poWrite.ts          # tulis pesanan & batch PO ke spreadsheet
+│  ├─ poSync.ts           # rekonsiliasi tab PO -> baris Sales
 │  ├─ auth.ts             # kunci password (hash cookie, tanpa simpan password)
 │  ├─ sheets.ts           # wrapper googleapis
 │  ├─ store.ts            # Sheets ↔ fallback lokal

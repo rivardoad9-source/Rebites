@@ -142,6 +142,30 @@ async function sheetIdOf(tab: TabName): Promise<number> {
   return id;
 }
 
+/** Nama seluruh tab di spreadsheet (termasuk tab PO milik pengguna). */
+export async function listTabTitles(): Promise<string[]> {
+  const sheets = getSheetsClient();
+  const meta = await sheets.spreadsheets.get({ spreadsheetId: spreadsheetId() });
+  return (meta.data.sheets ?? [])
+    .map((s) => s.properties?.title)
+    .filter((t): t is string => Boolean(t));
+}
+
+/** Nama tab pada rentang A1 harus dikutip; kutip tunggal di dalamnya digandakan. */
+function quoteTab(title: string): string {
+  return `'${title.replace(/'/g, "''")}'`;
+}
+
+/** Isi mentah sebuah tab, termasuk baris judul dan header. */
+export async function readTabValues(title: string, range = 'A1:Z200'): Promise<string[][]> {
+  const sheets = getSheetsClient();
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId: spreadsheetId(),
+    range: `${quoteTab(title)}!${range}`,
+  });
+  return (res.data.values ?? []).map((row) => row.map((cell) => (cell ?? '').toString()));
+}
+
 /** Semua baris data (tanpa header). */
 export async function readRows(tab: TabName): Promise<string[][]> {
   await ensureTabs();
@@ -151,6 +175,31 @@ export async function readRows(tab: TabName): Promise<string[][]> {
     range: `${tab}!A2:Z`,
   });
   return (res.data.values ?? []).map((row) => row.map((cell) => (cell ?? '').toString()));
+}
+
+/** Tulis nilai ke rentang A1 tertentu. `userEntered` dipakai kalau isinya rumus. */
+export async function writeValues(
+  tab: TabName | string,
+  a1: string,
+  values: (string | number)[][],
+  userEntered = false,
+): Promise<void> {
+  const sheets = getSheetsClient();
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: spreadsheetId(),
+    range: `${quoteTab(tab)}!${a1}`,
+    valueInputOption: userEntered ? 'USER_ENTERED' : 'RAW',
+    requestBody: { values },
+  });
+}
+
+/** Bikin tab baru (dipakai saat pengguna menambah batch PO dari dashboard). */
+export async function createTab(title: string): Promise<void> {
+  const sheets = getSheetsClient();
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId: spreadsheetId(),
+    requestBody: { requests: [{ addSheet: { properties: { title } } }] },
+  });
 }
 
 export async function appendRow(tab: TabName, values: (string | number)[]): Promise<void> {
