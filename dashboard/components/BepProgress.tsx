@@ -15,15 +15,15 @@ export default function BepProgress({ bep }: { bep: BepInfo }) {
             <Target className="h-4 w-4" aria-hidden />
           </span>
           <div>
-            <h2 className="text-base leading-tight font-bold text-coffee">Break Even Point</h2>
-            <p className="text-xs text-coffee/55">
+            <h2 className="text-base leading-tight font-bold text-ink">Break Even Point</h2>
+            <p className="text-xs text-ink/55">
               Modal balik: belanja batch aktif + operasional
             </p>
           </div>
         </div>
         <span
           className={`rounded-full px-2.5 py-1 text-xs font-bold ${
-            bep.reached ? 'bg-emerald-100 text-emerald-800' : 'bg-coffee/5 text-coffee/70'
+            bep.reached ? 'bg-good-soft text-good' : 'bg-ink/5 text-ink/70'
           }`}
         >
           {belumBisaDihitung ? '—' : `${progress}%`}
@@ -31,7 +31,7 @@ export default function BepProgress({ bep }: { bep: BepInfo }) {
       </header>
 
       <div
-        className="h-3 w-full overflow-hidden rounded-full bg-coffee/10"
+        className="h-3 w-full overflow-hidden rounded-full bg-ink/10"
         role="progressbar"
         aria-valuenow={progress}
         aria-valuemin={0}
@@ -40,7 +40,7 @@ export default function BepProgress({ bep }: { bep: BepInfo }) {
       >
         <div
           className={`h-full rounded-full transition-[width] duration-500 ${
-            bep.reached ? 'bg-emerald-600' : 'bg-mango'
+            bep.reached ? 'bg-good' : 'bg-mango'
           }`}
           style={{ width: `${progress}%` }}
         />
@@ -56,7 +56,7 @@ export default function BepProgress({ bep }: { bep: BepInfo }) {
         <Item label="Sudah terjual" value={`${angka(bep.cupsSold)} cup`} />
       </dl>
 
-      <p className="mt-3 text-xs text-coffee/60">
+      <p className="mt-3 text-xs text-ink/60">
         {belumBisaDihitung
           ? 'Isi minimal 1 batch belanja dan 1 penjualan supaya margin per cup bisa dihitung.'
           : bep.reached
@@ -69,9 +69,9 @@ export default function BepProgress({ bep }: { bep: BepInfo }) {
 
 function Item({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-ivory px-3 py-2">
-      <dt className="text-xs text-coffee/55">{label}</dt>
-      <dd className="font-semibold tabular-nums text-coffee">{value}</dd>
+    <div className="rounded-xl bg-well px-3 py-2">
+      <dt className="text-xs text-ink/55">{label}</dt>
+      <dd className="font-semibold tabular-nums text-ink">{value}</dd>
     </div>
   );
 }

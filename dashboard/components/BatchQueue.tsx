@@ -24,8 +24,8 @@ export default function BatchQueue({
             <Layers className="h-4 w-4" aria-hidden />
           </span>
           <div>
-            <h2 className="text-base leading-tight font-bold text-coffee">Antrean Stok FIFO</h2>
-            <p className="text-xs text-coffee/55">
+            <h2 className="text-base leading-tight font-bold text-ink">Antrean Stok FIFO</h2>
+            <p className="text-xs text-ink/55">
               {aktif.length} batch aktif ·{' '}
               {angka(aktif.reduce((sum, b) => sum + b.remainingCup, 0))} cup tersisa
             </p>
@@ -34,7 +34,7 @@ export default function BatchQueue({
       </header>
 
       {antrean.length === 0 ? (
-        <p className="rounded-xl bg-ivory px-3 py-6 text-center text-sm text-coffee/55">
+        <p className="rounded-xl bg-well px-3 py-6 text-center text-sm text-ink/55">
           Belum ada batch belanja. Input batch dulu supaya HPP penjualan bisa dihitung.
         </p>
       ) : (
@@ -45,16 +45,16 @@ export default function BatchQueue({
             const berikutnya = batch.status === 'ACTIVE' && aktif[0]?.id === batch.id;
 
             return (
-              <li key={batch.id} className="rounded-xl border border-coffee/10 bg-ivory/60 p-3">
+              <li key={batch.id} className="rounded-xl border border-ink/10 bg-well/60 p-3">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="flex items-center gap-2 text-sm font-bold text-coffee">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-coffee/10 text-[11px]">
+                    <p className="flex items-center gap-2 text-sm font-bold text-ink">
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-ink/10 text-[11px]">
                         {index + 1}
                       </span>
                       <span className="truncate">{batch.itemName}</span>
                     </p>
-                    <p className="mt-0.5 text-xs text-coffee/55">
+                    <p className="mt-0.5 text-xs text-ink/55">
                       {tanggal(batch.date)} · {rupiah(batch.totalCost)} / {angka(batch.yieldCup)} cup
                       · HPP {rupiah(batch.costPerCup)}/cup
                     </p>
@@ -63,8 +63,8 @@ export default function BatchQueue({
                     <span
                       className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
                         batch.status === 'ACTIVE'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-coffee/10 text-coffee/55'
+                          ? 'bg-good-soft text-good'
+                          : 'bg-ink/10 text-ink/55'
                       }`}
                     >
                       {batch.status === 'ACTIVE' ? 'ACTIVE' : 'DEPLETED'}
@@ -73,7 +73,7 @@ export default function BatchQueue({
                       <button
                         type="button"
                         onClick={() => onDelete(batch.id)}
-                        className="rounded-lg p-1.5 text-coffee/40 transition hover:bg-red-50 hover:text-red-600"
+                        className="rounded-lg p-1.5 text-ink/40 transition hover:bg-bad-soft hover:text-bad"
                         aria-label={`Hapus batch ${batch.itemName}`}
                       >
                         <Trash2 className="h-4 w-4" aria-hidden />
@@ -82,15 +82,15 @@ export default function BatchQueue({
                   </div>
                 </div>
 
-                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-coffee/10">
+                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-ink/10">
                   <div
                     className={`h-full rounded-full ${
-                      batch.status === 'ACTIVE' ? 'bg-mango' : 'bg-coffee/30'
+                      batch.status === 'ACTIVE' ? 'bg-mango' : 'bg-ink/30'
                     }`}
                     style={{ width: `${Math.min(100, terpakai)}%` }}
                   />
                 </div>
-                <p className="mt-1 flex justify-between text-[11px] text-coffee/55">
+                <p className="mt-1 flex justify-between text-[11px] text-ink/55">
                   <span>
                     Terpakai {angka(batch.usedCup)} / {angka(batch.yieldCup)} cup
                   </span>

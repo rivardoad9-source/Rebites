@@ -130,10 +130,10 @@ export default function BatchForm({ onSubmit }: Props) {
           />
         </Field>
 
-        <div className="rounded-xl bg-ivory px-3 py-3 text-center">
-          <p className="text-[11px] tracking-wide text-coffee/55 uppercase">HPP per cup</p>
-          <p className="text-lg font-extrabold tabular-nums text-coffee">{rupiah(costPerCup)}</p>
-          <p className="text-xs text-coffee/55">
+        <div className="rounded-xl bg-well px-3 py-3 text-center">
+          <p className="text-[11px] tracking-wide text-ink/55 uppercase">HPP per cup</p>
+          <p className="text-lg font-extrabold tabular-nums text-ink">{rupiah(costPerCup)}</p>
+          <p className="text-xs text-ink/55">
             {cups > 0 ? `${rupiah(cost)} ÷ ${cups} cup` : 'Isi total biaya dan yield cup'}
           </p>
         </div>

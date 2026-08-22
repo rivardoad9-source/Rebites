@@ -9,19 +9,19 @@ const STYLE: Record<
   SEHAT: {
     label: 'Sehat',
     hint: 'Net margin ≥ 40%',
-    className: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+    className: 'bg-good-soft text-good border-good/45',
     Icon: HeartPulse,
   },
   WASPADA: {
     label: 'Waspada',
     hint: 'Net margin 20–39%',
-    className: 'bg-amber-50 text-amber-900 border-amber-300',
+    className: 'bg-warn-soft text-warn border-warn/45',
     Icon: Activity,
   },
   KRITIS: {
     label: 'Kritis',
     hint: 'Net margin < 20%',
-    className: 'bg-red-50 text-red-800 border-red-300',
+    className: 'bg-bad-soft text-bad border-bad/45',
     Icon: AlertTriangle,
   },
 };

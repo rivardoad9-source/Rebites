@@ -1,31 +1,106 @@
 @import 'tailwindcss';
 
-/* Palet mengikuti brand Re-Bites (mango, cheese, leaf, coffee, ivory). */
+/*
+ * Palet Re-Bites (mango, cheese, leaf, coffee, ivory) dijadikan token semantik
+ * supaya satu set utility bisa dipakai di mode terang maupun gelap:
+ *   page  = latar halaman   card = permukaan kartu
+ *   well  = blok inset      field = input & chip
+ *   ink   = teks utama      good/warn/bad = status
+ * Nilai versi gelap didefinisikan sekali sebagai --dk-* lalu dipasang di dua
+ * tempat: pilihan manual (data-theme) dan preferensi sistem.
+ */
 @theme {
-  --color-ivory: #fff8ec;
-  --color-ivory-deep: #fbebd2;
-  --color-milk: #fffdf7;
+  --color-page: #fff8ec;
+  --color-card: #fffdf7;
+  --color-well: #fbf3e4;
+  --color-field: #ffffff;
+  --color-ink: #2b1b12;
+
   --color-mango: #e8792d;
   --color-mango-deep: #c85f19;
-  --color-cheese: #d9a62e;
+  --color-cheese: #b8891c;
   --color-leaf: #1f4d3d;
-  --color-leaf-deep: #153629;
-  --color-coffee: #2b1b12;
-  --color-danger: #c0392b;
+
+  --color-good: #0f7a52;
+  --color-good-soft: #e3f4ec;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #faefda;
+  --color-bad: #b3261e;
+  --color-bad-soft: #fbe7e5;
 
   --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --dk-page: #14100d;
+  --dk-card: #1f1811;
+  --dk-well: #191310;
+  --dk-field: #271e17;
+  --dk-ink: #f7ecdd;
+
+  --dk-mango: #ef8f42;
+  --dk-mango-deep: #f2a15c;
+  --dk-cheese: #e2b955;
+  --dk-leaf: #6fcfa8;
+
+  --dk-good: #4cc38a;
+  --dk-good-soft: #102c21;
+  --dk-warn: #e5b567;
+  --dk-warn-soft: #2e2210;
+  --dk-bad: #f08a80;
+  --dk-bad-soft: #331714;
+}
+
+/* Pilihan manual lewat tombol tema. */
+:root[data-theme='dark'] {
+  --color-page: var(--dk-page);
+  --color-card: var(--dk-card);
+  --color-well: var(--dk-well);
+  --color-field: var(--dk-field);
+  --color-ink: var(--dk-ink);
+  --color-mango: var(--dk-mango);
+  --color-mango-deep: var(--dk-mango-deep);
+  --color-cheese: var(--dk-cheese);
+  --color-leaf: var(--dk-leaf);
+  --color-good: var(--dk-good);
+  --color-good-soft: var(--dk-good-soft);
+  --color-warn: var(--dk-warn);
+  --color-warn-soft: var(--dk-warn-soft);
+  --color-bad: var(--dk-bad);
+  --color-bad-soft: var(--dk-bad-soft);
+}
+
+/* Ikut setelan HP kalau pengguna belum memilih sendiri. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-page: var(--dk-page);
+    --color-card: var(--dk-card);
+    --color-well: var(--dk-well);
+    --color-field: var(--dk-field);
+    --color-ink: var(--dk-ink);
+    --color-mango: var(--dk-mango);
+    --color-mango-deep: var(--dk-mango-deep);
+    --color-cheese: var(--dk-cheese);
+    --color-leaf: var(--dk-leaf);
+    --color-good: var(--dk-good);
+    --color-good-soft: var(--dk-good-soft);
+    --color-warn: var(--dk-warn);
+    --color-warn-soft: var(--dk-warn-soft);
+    --color-bad: var(--dk-bad);
+    --color-bad-soft: var(--dk-bad-soft);
+  }
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    color-scheme: light dark;
   }
 
   body {
-    background-color: var(--color-ivory);
-    color: var(--color-coffee);
+    background-color: var(--color-page);
+    color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
-    /* Ruang untuk bottom-nav di HP. */
     padding-bottom: env(safe-area-inset-bottom);
   }
 
@@ -46,19 +121,34 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  /* Ikon date-picker bawaan browser ikut gelap. */
+  input[type='date']::-webkit-calendar-picker-indicator {
+    filter: var(--date-icon-filter, none);
+  }
+}
+
+:root[data-theme='dark'] {
+  --date-icon-filter: invert(1) opacity(0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --date-icon-filter: invert(1) opacity(0.7);
+  }
 }
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-coffee/10 bg-milk p-4 shadow-[0_1px_2px_rgba(43,27,18,0.06)];
+    @apply rounded-2xl border border-ink/10 bg-card p-4 shadow-[0_1px_2px_rgba(0,0,0,0.06)];
   }
 
   .label {
-    @apply mb-1 block text-xs font-semibold tracking-wide text-coffee/60 uppercase;
+    @apply mb-1 block text-xs font-semibold tracking-wide text-ink/60 uppercase;
   }
 
   .field {
-    @apply w-full rounded-xl border border-coffee/15 bg-white px-3 py-3 text-coffee outline-none transition focus:border-mango focus:ring-2 focus:ring-mango/25;
+    @apply w-full rounded-xl border border-ink/15 bg-field px-3 py-3 text-ink outline-none transition focus:border-mango focus:ring-2 focus:ring-mango/25;
   }
 
   .btn-primary {
@@ -66,6 +156,6 @@
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-coffee/15 bg-white px-3 py-2 text-sm font-semibold text-coffee transition active:scale-[0.99] disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-ink/15 bg-field px-3 py-2 text-sm font-semibold text-ink transition active:scale-[0.99] disabled:opacity-60;
   }
 }
