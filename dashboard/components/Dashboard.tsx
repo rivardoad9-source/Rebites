@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   BarChart3,
+  ClipboardList,
   CloudOff,
   Coins,
   History,
@@ -29,17 +30,19 @@ import ExpenseForm from './ExpenseForm';
 import HealthBadge from './HealthBadge';
 import HistoryTable from './HistoryTable';
 import MetricCard from './MetricCard';
+import PoBoard from './PoBoard';
 import RevenueChart from './RevenueChart';
 import SaleForm from './SaleForm';
 import Skeleton from './Skeleton';
 import Toast, { type ToastState } from './Toast';
 import { Notice } from './ui';
 
-type Tab = 'ringkasan' | 'input' | 'riwayat';
+type Tab = 'ringkasan' | 'input' | 'po' | 'riwayat';
 
 const TABS: { key: Tab; label: string; Icon: typeof BarChart3 }[] = [
   { key: 'ringkasan', label: 'Ringkasan', Icon: BarChart3 },
   { key: 'input', label: 'Input', Icon: PlusCircle },
+  { key: 'po', label: 'PO', Icon: ClipboardList },
   { key: 'riwayat', label: 'Riwayat', Icon: History },
 ];
 
@@ -284,6 +287,11 @@ export default function Dashboard({ authEnabled = false }: { authEnabled?: boole
           <BatchForm onSubmit={handleSubmit('batch', 'Input batch belanja')} />
           <ExpenseForm onSubmit={handleSubmit('expense', 'Input pengeluaran')} />
         </div>
+      </section>
+
+      {/* ------------------------------------------------------------ PO */}
+      <section className={`${tab === 'po' ? 'block' : 'hidden'} mt-0 space-y-4 lg:mt-4 lg:block`}>
+        <PoBoard onChanged={() => void refresh('read')} />
       </section>
 
       {/* ------------------------------------------------------- riwayat */}
