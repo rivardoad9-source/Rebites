@@ -84,11 +84,28 @@ function spreadsheetId(): string {
 }
 
 const sheetIdCache = new Map<TabName, number>();
-let tabsReady = false;
+let tabsPromise: Promise<void> | null = null;
 
-/** Bikin tab yang belum ada + tulis baris header kalau masih kosong. */
-export async function ensureTabs(): Promise<void> {
-  if (tabsReady) return;
+/**
+ * Bikin tab yang belum ada + tulis baris header kalau masih kosong.
+ *
+ * Satu spreadsheet dibaca dari tiga tempat sekaligus (Batches/Sales/Expenses
+ * dibaca paralel), jadi pemanggilan pertama disimpan sebagai satu promise
+ * bersama. Tanpa itu ketiganya sama-sama melihat tab belum ada lalu sama-sama
+ * mencoba membuatnya, dan dua di antaranya gagal dengan "a sheet with the name
+ * ... already exists" — bikin koneksi pertama ke spreadsheet selalu tumbang.
+ */
+export function ensureTabs(): Promise<void> {
+  if (!tabsPromise) {
+    tabsPromise = doEnsureTabs().catch((error) => {
+      tabsPromise = null; // biar percobaan berikutnya tidak ikut gagal selamanya
+      throw error;
+    });
+  }
+  return tabsPromise;
+}
+
+async function doEnsureTabs(): Promise<void> {
   const sheets = getSheetsClient();
   const meta = await sheets.spreadsheets.get({ spreadsheetId: spreadsheetId() });
   const existing = new Map<string, number>();
@@ -100,16 +117,28 @@ export async function ensureTabs(): Promise<void> {
 
   const missing = (Object.values(SHEET_TABS) as TabName[]).filter((t) => !existing.has(t));
   if (missing.length > 0) {
-    const res = await sheets.spreadsheets.batchUpdate({
-      spreadsheetId: spreadsheetId(),
-      requestBody: {
-        requests: missing.map((title) => ({ addSheet: { properties: { title } } })),
-      },
-    });
-    for (const reply of res.data.replies ?? []) {
-      const props = reply.addSheet?.properties;
-      if (props?.title && typeof props.sheetId === 'number') {
-        existing.set(props.title, props.sheetId);
+    try {
+      const res = await sheets.spreadsheets.batchUpdate({
+        spreadsheetId: spreadsheetId(),
+        requestBody: {
+          requests: missing.map((title) => ({ addSheet: { properties: { title } } })),
+        },
+      });
+      for (const reply of res.data.replies ?? []) {
+        const props = reply.addSheet?.properties;
+        if (props?.title && typeof props.sheetId === 'number') {
+          existing.set(props.title, props.sheetId);
+        }
+      }
+    } catch (error) {
+      // Tab bisa saja baru dibuat pihak lain (proses lain, atau dibuat manual
+      // barusan) — itu bukan kegagalan, cukup baca ulang daftar tabnya.
+      if (!alreadyExists(error)) throw error;
+      const fresh = await sheets.spreadsheets.get({ spreadsheetId: spreadsheetId() });
+      for (const sheet of fresh.data.sheets ?? []) {
+        const title = sheet.properties?.title;
+        const id = sheet.properties?.sheetId;
+        if (title && typeof id === 'number') existing.set(title, id);
       }
     }
   }
@@ -132,7 +161,11 @@ export async function ensureTabs(): Promise<void> {
     }
   }
 
-  tabsReady = true;
+}
+
+function alreadyExists(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.toLowerCase().includes('already exists');
 }
 
 async function sheetIdOf(tab: TabName): Promise<number> {
