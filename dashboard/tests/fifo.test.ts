@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { previewAllocation, runFifo } from '../lib/fifo.ts';
-import { computeBep, computeChart, computeDaily, computeMetrics, healthOf } from '../lib/metrics.ts';
+import { computeChart, computeDaily, computeMetrics, healthOf } from '../lib/metrics.ts';
 import type { Batch, Expense, Sale } from '../lib/types.ts';
 
 const batch = (id: string, date: string, totalCost: number, yieldCup: number): Batch => ({
@@ -133,23 +133,6 @@ test('metrik keuangan dan health badge', () => {
   assert.equal(healthOf(39.9), 'WASPADA');
   assert.equal(healthOf(20), 'WASPADA');
   assert.equal(healthOf(19.9), 'KRITIS');
-});
-
-test('BEP: target modal batch aktif + OPEX', () => {
-  const fifo = runFifo(
-    [batch('b1', '2026-08-01', 100_000, 20), batch('b2', '2026-08-05', 200_000, 40)],
-    [sale('s1', '2026-08-06', 20, 15_000)],
-  );
-  const metrics = computeMetrics(fifo.batches, fifo.sales, [expense('e1', '2026-08-06', 40_000)]);
-  const bep = computeBep(fifo.batches, metrics);
-
-  // b1 habis -> tinggal b2 (200.000) + OPEX 40.000 = 240.000.
-  assert.equal(bep.targetCost, 240_000);
-  assert.equal(bep.marginPerCup, 15_000 - 5_000);
-  assert.equal(bep.bepCups, 24);
-  assert.equal(bep.cupsSold, 20);
-  assert.equal(bep.progress, 83);
-  assert.equal(bep.reached, false);
 });
 
 test('grafik kumulatif + proyeksi akhir bulan', () => {

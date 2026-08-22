@@ -7,10 +7,10 @@ import type { Snapshot } from '@/lib/types';
 
 type TabKey = 'harian' | 'penjualan' | 'opex';
 
-const TABS: { key: TabKey; label: string }[] = [
-  { key: 'harian', label: 'Rekap Harian' },
-  { key: 'penjualan', label: 'Penjualan' },
-  { key: 'opex', label: 'OPEX' },
+const TABS: { key: TabKey; label: string; short: string }[] = [
+  { key: 'harian', label: 'Rekap Harian', short: 'Harian' },
+  { key: 'penjualan', label: 'Penjualan', short: 'Penjualan' },
+  { key: 'opex', label: 'OPEX', short: 'OPEX' },
 ];
 
 function firstDayOfMonth(): string {
@@ -122,12 +122,109 @@ export default function HistoryTable({
               tab === t.key ? 'bg-field text-ink shadow-sm' : 'text-ink/55'
             }`}
           >
-            {t.label}
+            <span className="sm:hidden">{t.short}</span>
+            <span className="hidden sm:inline">{t.label}</span>
           </button>
         ))}
       </div>
 
-      <div className="-mx-4 overflow-x-auto px-4">
+      {/*
+        Di HP tabel 6-7 kolom bikin kolom aksi terdorong ke luar layar (tombol
+        hapus jadi tidak terjangkau tanpa geser horizontal), jadi baris riwayat
+        ditampilkan sebagai kartu. Tabel penuh dipakai mulai layar sm ke atas.
+      */}
+      <div className="space-y-2 sm:hidden">
+        {tab === 'harian' ? (
+          daily.length === 0 ? (
+            <EmptyRows />
+          ) : (
+            daily.map((r) => (
+              <article key={r.date} className="rounded-xl border border-ink/10 bg-well/60 p-3">
+                <header className="flex items-center justify-between gap-2">
+                  <p className="font-bold text-ink">{tanggal(r.date)}</p>
+                  <span className="rounded-full bg-ink/5 px-2 py-0.5 text-xs font-semibold text-ink/70">
+                    {angka(r.cups)} cup
+                  </span>
+                </header>
+                <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-sm">
+                  <Cell label="Omzet" value={rupiah(r.omzet)} />
+                  <Cell label="HPP" value={rupiah(r.hpp)} />
+                  <Cell label="OPEX" value={rupiah(r.opex)} />
+                  <Cell
+                    label="Laba bersih"
+                    value={rupiah(r.netProfit)}
+                    tone={r.netProfit < 0 ? 'danger' : 'good'}
+                  />
+                </dl>
+              </article>
+            ))
+          )
+        ) : null}
+
+        {tab === 'penjualan' ? (
+          sales.length === 0 ? (
+            <EmptyRows />
+          ) : (
+            sales.map((s) => (
+              <article key={s.id} className="rounded-xl border border-ink/10 bg-well/60 p-3">
+                <header className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-bold text-ink">{tanggal(s.date)}</p>
+                    <p className="text-xs text-ink/55">
+                      {angka(s.cups)} cup × {rupiah(s.pricePerCup)}
+                      {s.channel ? ` · ${s.channel}` : ''}
+                    </p>
+                  </div>
+                  <DeleteButton
+                    label={`Hapus penjualan ${s.date}`}
+                    onClick={() => onDelete('sale', s.id)}
+                  />
+                </header>
+                <dl className="mt-2 grid grid-cols-3 gap-2 text-sm">
+                  <Cell label="Omzet" value={rupiah(s.revenue)} />
+                  <Cell label="HPP FIFO" value={rupiah(s.cogs)} />
+                  <Cell
+                    label="Laba"
+                    value={rupiah(s.grossProfit)}
+                    tone={s.grossProfit < 0 ? 'danger' : 'good'}
+                  />
+                </dl>
+                {s.shortageCups > 0 ? (
+                  <p className="mt-1 text-xs text-warn">{s.shortageCups} cup belum ada batch-nya</p>
+                ) : null}
+                {s.note ? <p className="mt-1 text-xs text-ink/55">{s.note}</p> : null}
+              </article>
+            ))
+          )
+        ) : null}
+
+        {tab === 'opex' ? (
+          expenses.length === 0 ? (
+            <EmptyRows />
+          ) : (
+            expenses.map((e) => (
+              <article key={e.id} className="rounded-xl border border-ink/10 bg-well/60 p-3">
+                <header className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-bold text-ink">{e.category}</p>
+                    <p className="text-xs text-ink/55">{tanggal(e.date)}</p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="font-extrabold tabular-nums text-ink">{rupiah(e.amount)}</span>
+                    <DeleteButton
+                      label={`Hapus pengeluaran ${e.category}`}
+                      onClick={() => onDelete('expense', e.id)}
+                    />
+                  </div>
+                </header>
+                {e.note ? <p className="mt-1 text-xs text-ink/55">{e.note}</p> : null}
+              </article>
+            ))
+          )
+        ) : null}
+      </div>
+
+      <div className="-mx-4 hidden overflow-x-auto px-4 sm:block">
         {tab === 'harian' ? (
           <Table
             head={['Tanggal', 'Cup', 'Omzet', 'HPP', 'OPEX', 'Laba Bersih']}
@@ -206,6 +303,32 @@ export default function HistoryTable({
         ) : null}
       </div>
     </section>
+  );
+}
+
+function EmptyRows() {
+  return (
+    <p className="rounded-xl bg-well px-3 py-6 text-center text-sm text-ink/55">
+      Belum ada data di rentang tanggal ini.
+    </p>
+  );
+}
+
+function Cell({
+  label,
+  value,
+  tone = 'neutral',
+}: {
+  label: string;
+  value: string;
+  tone?: 'neutral' | 'good' | 'danger';
+}) {
+  const tones = { neutral: 'text-ink', good: 'text-good', danger: 'text-bad' } as const;
+  return (
+    <div>
+      <dt className="text-[11px] tracking-wide text-ink/50 uppercase">{label}</dt>
+      <dd className={`font-semibold tabular-nums ${tones[tone]}`}>{value}</dd>
+    </div>
   );
 }
 

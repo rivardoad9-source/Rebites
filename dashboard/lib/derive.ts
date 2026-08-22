@@ -1,5 +1,5 @@
 import { runFifo } from './fifo';
-import { computeBep, computeChart, computeDaily, computeMetrics } from './metrics';
+import { computeChart, computeDaily, computeMetrics } from './metrics';
 import type { Batch, Expense, Sale, Snapshot } from './types';
 
 export interface DeriveInput {
@@ -23,7 +23,6 @@ export function deriveSnapshot(input: DeriveInput, now = new Date()): Snapshot {
   const metrics = computeMetrics(fifo.batches, fifo.sales, expenses);
   const daily = computeDaily(fifo.sales, expenses);
   const chart = computeChart(daily, now);
-  const bep = computeBep(fifo.batches, metrics);
 
   return {
     generatedAt: now.toISOString(),
@@ -34,7 +33,6 @@ export function deriveSnapshot(input: DeriveInput, now = new Date()): Snapshot {
     expenses: expenses.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)),
     metrics,
     chart,
-    bep,
     daily: [...daily].reverse(),
     warnings: fifo.warnings,
   };

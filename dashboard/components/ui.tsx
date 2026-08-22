@@ -31,7 +31,6 @@ export function NumberInput({
   onChange,
   placeholder,
   min = 0,
-  step = 1,
   prefix,
   suffix,
 }: {
@@ -40,7 +39,6 @@ export function NumberInput({
   onChange: (value: string) => void;
   placeholder?: string;
   min?: number;
-  step?: number;
   prefix?: string;
   suffix?: string;
 }) {
@@ -57,7 +55,12 @@ export function NumberInput({
         inputMode="numeric"
         pattern="[0-9]*"
         min={min}
-        step={step}
+        /*
+         * step="any" disengaja: dengan step angka (mis. 1000) browser menolak
+         * nominal yang bukan kelipatannya — "26400" jadi dianggap tidak valid.
+         * Pembulatan ke rupiah utuh tetap dijamin Math.round() saat submit.
+         */
+        step="any"
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}

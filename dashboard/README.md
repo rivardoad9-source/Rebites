@@ -34,6 +34,25 @@ Recharts · googleapis.
 - Tabel riwayat (rekap harian / penjualan / OPEX) dengan filter rentang tanggal
   plus pintasan Hari ini · 7 hari · Bulan ini · Semua.
 
+### Catatan PO (tab PO)
+- Tab **PO** di dashboard adalah cerminan tab "List PO" di spreadsheet, dengan
+  kolom yang sama persis: No, Nama, Jumlah Cup, Harga per Cup, Total Bayar,
+  Status Bayar, Notes. Jadi satu pesanan bisa dicatat dari mana saja — lewat
+  HP atau langsung di Sheets — dan hasilnya baris yang sama.
+- Pesanan baru mengisi slot bernomor yang masih kosong (bukan ditumpuk di bawah
+  baris TOTAL), status Lunas/Belum bisa diketuk untuk diubah, dan menghapus
+  pesanan mengosongkan isinya tanpa merusak penomoran. Baris TOTAL diperbarui
+  memakai rumus `SUM` supaya tetap hidup saat diedit manual.
+- Tombol **Batch baru** membuat tab PO baru memakai template yang sama.
+- Setiap batch PO diringkas otomatis jadi baris penjualan di tab `Sales`:
+  dikelompokkan per harga jual (mis. 7 cup @14.000 dan 15 cup @15.000 jadi dua
+  baris), hanya yang berstatus **Lunas**, dengan ID deterministik `po_<tab>_<harga>`
+  supaya impor berulang memperbarui baris yang sama — bukan menggandakan.
+  Pesanan yang bertambah menambah cup pada baris itu; batch yang dihapus ikut
+  dibersihkan dari `Sales`. Baris penjualan yang diinput manual tidak disentuh.
+- Set `PO_IMPORT_INCLUDE_UNPAID=true` kalau pesanan yang belum lunas juga mau
+  dihitung sebagai omzet, atau `PO_IMPORT=off` untuk mematikan fitur ini.
+
 ### Google Sheets two-way sync
 - **READ** — dashboard membaca tab `Batches`, `Sales`, dan `Expenses`.
 - **WRITE** — setiap input dari UI langsung `append`/`update`/`delete` baris di
@@ -53,8 +72,19 @@ Recharts · googleapis.
 - Grafik area kumulatif Omzet vs Pengeluaran (HPP + OPEX) sepanjang bulan
   berjalan, plus garis putus-putus proyeksi omzet akhir bulan (rata-rata harian
   × jumlah hari dalam bulan).
-- BEP progress bar: cup terjual vs titik balik modal
-  `(belanja batch ACTIVE + total OPEX) ÷ margin per cup`.
+
+### Kunci password
+- Isi env `APP_PASSWORD` untuk mengunci seluruh dashboard: halaman diarahkan ke
+  `/login`, dan seluruh endpoint API membalas `401` tanpa sesi yang sah.
+- Password tidak pernah ditulis di kode, dan cookie sesi hanya menyimpan hash
+  SHA-256 dari password — jadi isi cookie tidak bisa dipakai menebak balik
+  passwordnya, dan sesi lama otomatis gugur begitu passwordnya diganti.
+- Sesi berlaku 30 hari per perangkat (cookie `httpOnly`), dengan tombol
+  **Keluar** di header.
+- Webhook `POST /api/sync` dari Apps Script tetap bisa masuk tanpa sesi selama
+  membawa `SYNC_SECRET` yang benar.
+- Kalau `APP_PASSWORD` dikosongkan, dashboard terbuka tanpa kunci (praktis saat
+  `npm run dev`).
 
 ### UI/UX & teknis
 - Mobile-first: layout satu kolom, header sticky, bottom nav, tombol pintas
@@ -96,7 +126,7 @@ Perintah lain:
 npm run build      # build produksi
 npm run start      # jalankan hasil build
 npm run typecheck  # tsc --noEmit
-npm test           # unit test FIFO, metrik, BEP, proyeksi, parser
+npm test           # unit test FIFO, metrik, proyeksi, parser
 ```
 
 ---
@@ -116,6 +146,7 @@ npm test           # unit test FIFO, metrik, BEP, proyeksi, parser
    GOOGLE_CLIENT_EMAIL=mango-pos@project-id.iam.gserviceaccount.com
    GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n"
    SYNC_SECRET=rahasia-bebas
+   APP_PASSWORD=password-untuk-buka-dashboard
    ```
 
    `GOOGLE_PRIVATE_KEY` boleh ditulis satu baris dengan literal `\n` — aplikasi
@@ -164,11 +195,13 @@ tersebut (Script properties `DASHBOARD_URL` + `SYNC_SECRET`, lalu jalankan
 
 | Endpoint | Method | Kegunaan |
 |---|---|---|
-| `/api/sync` | `GET` | Snapshot lengkap: data + metrik + chart + BEP |
+| `/api/sync` | `GET` | Snapshot lengkap: data + metrik + chart |
 | `/api/sync` | `POST` | Re-kalkulasi FIFO & tulis balik kolom turunan (dipakai webhook Apps Script; butuh `x-sync-secret` bila `SYNC_SECRET` diisi) |
 | `/api/batches` | `GET` `POST` `DELETE` | Batch belanja bahan baku |
 | `/api/sales` | `GET` `POST` `DELETE` | Penjualan harian |
 | `/api/expenses` | `GET` `POST` `PATCH` `DELETE` | Pengeluaran operasional |
+| `/api/po` | `GET` `POST` `PATCH` `DELETE` | Catatan PO per pemesan + buat batch baru |
+| `/api/login` | `POST` `DELETE` | Masuk (pasang cookie sesi) dan keluar |
 
 Contoh:
 
@@ -188,17 +221,23 @@ round-trip untuk update seluruh angka.
 ```
 dashboard/
 ├─ app/
-│  ├─ api/{sync,batches,sales,expenses}/route.ts   # REST + webhook
+│  ├─ api/{sync,batches,sales,expenses,login}/route.ts   # REST + webhook + sesi
+│  ├─ login/page.tsx      # halaman kunci password
 │  ├─ layout.tsx · globals.css · page.tsx
+├─ middleware.ts          # gerbang password untuk semua halaman & API
 ├─ components/            # UI (form, chart, tabel, kartu metrik, toast)
 ├─ hooks/
 │  ├─ useDashboard.ts     # cache lokal, antrean offline, polling
 │  └─ useTheme.ts         # store tema terang/gelap lintas komponen
 ├─ lib/
 │  ├─ fifo.ts             # FIFO engine (murni, tanpa I/O)
-│  ├─ metrics.ts          # metrik, health, chart, BEP
+│  ├─ metrics.ts          # metrik, health, chart
 │  ├─ derive.ts           # data mentah -> seluruh angka dashboard
 │  ├─ parse.ts            # normalisasi rupiah/tanggal/kategori
+│  ├─ poImport.ts         # baca tab PO + rencana penulisan barisnya (murni)
+│  ├─ poWrite.ts          # tulis pesanan & batch PO ke spreadsheet
+│  ├─ poSync.ts           # rekonsiliasi tab PO -> baris Sales
+│  ├─ auth.ts             # kunci password (hash cookie, tanpa simpan password)
 │  ├─ sheets.ts           # wrapper googleapis
 │  ├─ store.ts            # Sheets ↔ fallback lokal
 │  └─ snapshot.ts · types.ts · format.ts · api.ts
@@ -218,7 +257,7 @@ Vercel (atau host Node lain):
 
 1. Import repo, set **Root Directory** ke `dashboard`.
 2. Isi environment variables `GOOGLE_SHEET_ID`, `GOOGLE_CLIENT_EMAIL`,
-   `GOOGLE_PRIVATE_KEY`, `SYNC_SECRET`.
+   `GOOGLE_PRIVATE_KEY`, `SYNC_SECRET`, dan `APP_PASSWORD`.
 3. Deploy, lalu isi `DASHBOARD_URL` di Script properties Apps Script dengan URL
    hasil deploy.
 
