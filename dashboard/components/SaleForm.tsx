@@ -106,7 +106,6 @@ export default function SaleForm({ batches, defaultPrice, onSubmit }: Props) {
             onChange={setPrice}
             placeholder="15000"
             prefix="Rp"
-            step={500}
           />
           <QuickPicks values={[12000, 15000, 18000, 20000]} onPick={(v) => setPrice(String(v))} format={(v) => angka(v)} />
         </Field>

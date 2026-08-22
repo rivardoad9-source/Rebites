@@ -90,7 +90,6 @@ export default function ExpenseForm({ onSubmit }: Props) {
             onChange={setAmount}
             placeholder="15000"
             prefix="Rp"
-            step={1000}
           />
           <QuickPicks
             values={[5000, 10000, 20000, 50000]}
