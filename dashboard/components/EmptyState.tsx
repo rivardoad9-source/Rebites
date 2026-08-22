@@ -17,8 +17,8 @@ export default function EmptyState({ onStart }: { onStart: () => void }) {
       </span>
       <h2 className="text-lg font-extrabold text-ink">Mulai dari batch pertama</h2>
       <p className="mx-auto mt-1 max-w-sm text-sm text-ink/60">
-        Belum ada data. Tiga langkah ini bikin seluruh metrik — HPP, laba bersih, BEP — langsung
-        hidup.
+        Belum ada data. Tiga langkah ini bikin seluruh metrik — HPP, laba kotor, laba bersih —
+        langsung hidup.
       </p>
 
       <ol className="mx-auto mt-4 max-w-sm space-y-2 text-left">

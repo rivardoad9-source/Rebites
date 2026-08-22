@@ -116,18 +116,6 @@ export interface ChartPoint {
   proyeksi: number | null;
 }
 
-export interface BepInfo {
-  /** Modal yang harus balik: belanja batch aktif + total OPEX. */
-  targetCost: number;
-  marginPerCup: number;
-  bepCups: number | null;
-  cupsSold: number;
-  /** 0 - 100 */
-  progress: number;
-  cupsToGo: number | null;
-  reached: boolean;
-}
-
 export interface DailyRow {
   date: ISODate;
   cups: number;
@@ -147,7 +135,6 @@ export interface Snapshot {
   expenses: Expense[];
   metrics: Metrics;
   chart: ChartPoint[];
-  bep: BepInfo;
   daily: DailyRow[];
   warnings: string[];
 }

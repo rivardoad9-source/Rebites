@@ -24,7 +24,6 @@ import { useTheme } from '@/hooks/useTheme';
 import { angka, namaBulan, rupiah } from '@/lib/format';
 import BatchForm from './BatchForm';
 import BatchQueue from './BatchQueue';
-import BepProgress from './BepProgress';
 import EmptyState from './EmptyState';
 import ExpenseForm from './ExpenseForm';
 import HealthBadge from './HealthBadge';
@@ -70,7 +69,7 @@ export default function Dashboard({ authEnabled = false }: { authEnabled?: boole
   const [tab, setTab] = useState<Tab>('ringkasan');
   const [toast, setToast] = useState<ToastState | null>(null);
 
-  const { metrics, bep, chart } = snapshot;
+  const { metrics, chart } = snapshot;
   const proyeksi = chart.length > 0 ? (chart[chart.length - 1].proyeksi ?? 0) : 0;
 
   const showToast = useCallback((next: Omit<ToastState, 'id'>) => {
@@ -268,10 +267,7 @@ export default function Dashboard({ authEnabled = false }: { authEnabled?: boole
 
           <RevenueChart data={chart} bulan={namaBulan()} proyeksiAkhirBulan={proyeksi} />
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            <BepProgress bep={bep} />
-            <BatchQueue batches={snapshot.batches} onDelete={(id) => handleDelete('batch', id)} />
-          </div>
+          <BatchQueue batches={snapshot.batches} onDelete={(id) => handleDelete('batch', id)} />
         </section>
       ) : null}
 

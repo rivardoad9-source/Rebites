@@ -1,6 +1,5 @@
 import type {
   BatchState,
-  BepInfo,
   ChartPoint,
   DailyRow,
   Expense,
@@ -146,46 +145,4 @@ export function computeChart(daily: DailyRow[], today = new Date()): ChartPoint[
       proyeksi: Math.round(dailyAvg * day),
     };
   });
-}
-
-/**
- * BEP: berapa cup lagi sampai modal balik.
- * Target = total belanja batch yang masih ACTIVE + seluruh OPEX.
- */
-export function computeBep(
-  batches: BatchState[],
-  metrics: Metrics,
-  fallbackPrice = 0,
-): BepInfo {
-  const modalBatchAktif = batches
-    .filter((b) => b.status === 'ACTIVE')
-    .reduce((sum, b) => sum + Math.round(b.totalCost), 0);
-  const targetCost = modalBatchAktif + metrics.totalOpex;
-
-  const avgPrice = metrics.avgPricePerCup > 0 ? metrics.avgPricePerCup : Math.round(fallbackPrice);
-  const avgCogs =
-    metrics.avgCogsPerCup > 0
-      ? metrics.avgCogsPerCup
-      : (() => {
-          const active = batches.filter((b) => b.status === 'ACTIVE' && b.yieldCup > 0);
-          if (active.length === 0) return 0;
-          const cost = active.reduce((sum, b) => sum + b.totalCost, 0);
-          const cups = active.reduce((sum, b) => sum + b.yieldCup, 0);
-          return cups > 0 ? Math.round(cost / cups) : 0;
-        })();
-
-  const marginPerCup = Math.max(0, avgPrice - avgCogs);
-  const bepCups = marginPerCup > 0 && targetCost > 0 ? Math.ceil(targetCost / marginPerCup) : null;
-  const cupsSold = metrics.cupsSold;
-  const progress = bepCups && bepCups > 0 ? Math.min(100, Math.round((cupsSold / bepCups) * 100)) : 0;
-
-  return {
-    targetCost,
-    marginPerCup,
-    bepCups,
-    cupsSold,
-    progress,
-    cupsToGo: bepCups === null ? null : Math.max(0, bepCups - cupsSold),
-    reached: bepCups !== null && cupsSold >= bepCups,
-  };
 }

@@ -53,8 +53,6 @@ Recharts · googleapis.
 - Grafik area kumulatif Omzet vs Pengeluaran (HPP + OPEX) sepanjang bulan
   berjalan, plus garis putus-putus proyeksi omzet akhir bulan (rata-rata harian
   × jumlah hari dalam bulan).
-- BEP progress bar: cup terjual vs titik balik modal
-  `(belanja batch ACTIVE + total OPEX) ÷ margin per cup`.
 
 ### Kunci password
 - Isi env `APP_PASSWORD` untuk mengunci seluruh dashboard: halaman diarahkan ke
@@ -109,7 +107,7 @@ Perintah lain:
 npm run build      # build produksi
 npm run start      # jalankan hasil build
 npm run typecheck  # tsc --noEmit
-npm test           # unit test FIFO, metrik, BEP, proyeksi, parser
+npm test           # unit test FIFO, metrik, proyeksi, parser
 ```
 
 ---
@@ -178,7 +176,7 @@ tersebut (Script properties `DASHBOARD_URL` + `SYNC_SECRET`, lalu jalankan
 
 | Endpoint | Method | Kegunaan |
 |---|---|---|
-| `/api/sync` | `GET` | Snapshot lengkap: data + metrik + chart + BEP |
+| `/api/sync` | `GET` | Snapshot lengkap: data + metrik + chart |
 | `/api/sync` | `POST` | Re-kalkulasi FIFO & tulis balik kolom turunan (dipakai webhook Apps Script; butuh `x-sync-secret` bila `SYNC_SECRET` diisi) |
 | `/api/batches` | `GET` `POST` `DELETE` | Batch belanja bahan baku |
 | `/api/sales` | `GET` `POST` `DELETE` | Penjualan harian |
@@ -213,7 +211,7 @@ dashboard/
 │  └─ useTheme.ts         # store tema terang/gelap lintas komponen
 ├─ lib/
 │  ├─ fifo.ts             # FIFO engine (murni, tanpa I/O)
-│  ├─ metrics.ts          # metrik, health, chart, BEP
+│  ├─ metrics.ts          # metrik, health, chart
 │  ├─ derive.ts           # data mentah -> seluruh angka dashboard
 │  ├─ parse.ts            # normalisasi rupiah/tanggal/kategori
 │  ├─ auth.ts             # kunci password (hash cookie, tanpa simpan password)
