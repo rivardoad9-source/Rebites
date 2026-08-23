@@ -68,7 +68,7 @@ export default function SaleForm({ batches, defaultPrice, onSubmit }: Props) {
       title="Input Penjualan"
       description="Stok terpotong otomatis dari batch paling lama (FIFO)"
       icon={
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-mango/10 text-mango-deep">
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand/10 text-brand-deep">
           <CupSoda className="h-4 w-4" aria-hidden />
         </span>
       }
