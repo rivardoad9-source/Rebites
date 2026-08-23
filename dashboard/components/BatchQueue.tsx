@@ -50,7 +50,7 @@ export default function BatchQueue({
                   <span
                     className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-extrabold ${
                       batch.status === 'ACTIVE'
-                        ? 'bg-mango/15 text-mango-deep'
+                        ? 'bg-brand/15 text-brand-deep'
                         : 'bg-ink/8 text-ink/40'
                     }`}
                   >
@@ -89,7 +89,7 @@ export default function BatchQueue({
                 <div className="mt-2 ml-12 h-1.5 overflow-hidden rounded-full bg-ink/10">
                   <div
                     className={`h-full rounded-full ${
-                      batch.status === 'ACTIVE' ? 'bg-mango' : 'bg-ink/30'
+                      batch.status === 'ACTIVE' ? 'bg-brand' : 'bg-ink/30'
                     }`}
                     style={{ width: `${Math.min(100, terpakai)}%` }}
                   />
@@ -104,7 +104,7 @@ export default function BatchQueue({
                       {batch.status === 'ACTIVE' ? 'ACTIVE' : 'DEPLETED'}
                     </span>
                     {berikutnya ? (
-                      <span className="rounded-full bg-mango/12 px-2 py-0.5 font-bold text-mango-deep">
+                      <span className="rounded-full bg-brand/12 px-2 py-0.5 font-bold text-brand-deep">
                         dipakai berikutnya
                       </span>
                     ) : null}

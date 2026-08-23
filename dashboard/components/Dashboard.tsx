@@ -152,7 +152,7 @@ export default function Dashboard({
           <button
             type="button"
             onClick={cycle}
-            className="grid h-9 w-9 place-items-center rounded-full bg-card text-ink/60 shadow-[0_1px_4px_rgba(43,27,18,0.10)] transition active:scale-95"
+            className="grid h-9 w-9 place-items-center rounded-full bg-card text-ink/60 shadow-[0_1px_4px_rgba(19,26,46,0.10)] transition active:scale-95"
             aria-label={`${themeLabel} — ketuk untuk ganti`}
             title={themeLabel}
           >
@@ -162,14 +162,14 @@ export default function Dashboard({
             <button
               type="button"
               onClick={() => void logout()}
-              className="grid h-9 w-9 place-items-center rounded-full bg-card text-ink/60 shadow-[0_1px_4px_rgba(43,27,18,0.10)] transition active:scale-95"
+              className="grid h-9 w-9 place-items-center rounded-full bg-card text-ink/60 shadow-[0_1px_4px_rgba(19,26,46,0.10)] transition active:scale-95"
               aria-label="Keluar"
             >
               <LogOut className="h-4 w-4" aria-hidden />
             </button>
           ) : null}
           <span
-            className="grid h-10 w-10 place-items-center rounded-full bg-mango text-base font-extrabold text-white shadow-[0_4px_12px_-4px_rgba(200,95,25,0.8)]"
+            className="grid h-10 w-10 place-items-center rounded-full bg-brand text-base font-extrabold text-white shadow-[0_4px_12px_-4px_rgba(43,87,232,0.75)]"
             aria-hidden
           >
             {initial}
@@ -332,7 +332,7 @@ export default function Dashboard({
       <Toast toast={toast} onDismiss={() => setToast(null)} />
 
       {/* ------------------------------------------ bottom nav (mobile) */}
-      <nav className="fixed inset-x-0 bottom-0 z-20 bg-card/95 shadow-[0_-2px_16px_-6px_rgba(43,27,18,0.25)] backdrop-blur lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-20 bg-card/95 shadow-[0_-2px_16px_-6px_rgba(19,26,46,0.22)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-5xl items-end">
           {NAV_LEFT.map((item) => (
             <NavItem
@@ -349,8 +349,8 @@ export default function Dashboard({
               onClick={() => setTab("input")}
               aria-label="Input transaksi"
               aria-current={tab === "input" ? "page" : undefined}
-              className={`-mt-6 grid h-14 w-14 place-items-center rounded-full text-white shadow-[0_8px_20px_-6px_rgba(200,95,25,0.9)] transition active:scale-95 ${
-                tab === "input" ? "bg-mango-deep" : "bg-mango"
+              className={`-mt-6 grid h-14 w-14 place-items-center rounded-full text-white shadow-[0_8px_20px_-6px_rgba(43,87,232,0.85)] transition active:scale-95 ${
+                tab === "input" ? "bg-brand-deep" : "bg-brand"
               }`}
             >
               <Plus className="h-6 w-6" aria-hidden />
@@ -388,7 +388,7 @@ function NavItem({
       onClick={() => onSelect(key)}
       aria-current={active === key ? "page" : undefined}
       className={`flex flex-1 flex-col items-center gap-0.5 py-3 text-[11px] font-semibold transition ${
-        active === key ? "text-mango-deep" : "text-ink/45"
+        active === key ? "text-brand-deep" : "text-ink/45"
       }`}
     >
       <Icon className="h-5 w-5" aria-hidden />

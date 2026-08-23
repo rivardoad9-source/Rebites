@@ -41,7 +41,7 @@ export default function Toast({
               toast.onAction?.();
               onDismiss();
             }}
-            className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-mango/10 px-2.5 py-1.5 font-bold text-mango-deep"
+            className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-brand/10 px-2.5 py-1.5 font-bold text-brand-deep"
           >
             <Undo2 className="h-4 w-4" aria-hidden />
             {toast.actionLabel}

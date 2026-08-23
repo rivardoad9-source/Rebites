@@ -12,7 +12,7 @@ export default function EmptyState({ onStart }: { onStart: () => void }) {
 
   return (
     <section className="card text-center">
-      <span className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-mango/10 text-mango-deep">
+      <span className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-brand/10 text-brand-deep">
         <PackagePlus className="h-6 w-6" aria-hidden />
       </span>
       <h2 className="text-lg font-extrabold text-ink">Mulai dari batch pertama</h2>
@@ -24,7 +24,7 @@ export default function EmptyState({ onStart }: { onStart: () => void }) {
       <ol className="mx-auto mt-4 max-w-sm space-y-2 text-left">
         {steps.map((step, index) => (
           <li key={step} className="flex gap-2 rounded-xl bg-well px-3 py-2 text-sm text-ink/75">
-            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-mango/15 text-[11px] font-bold text-mango-deep">
+            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand/15 text-[11px] font-bold text-brand-deep">
               {index + 1}
             </span>
             {step}

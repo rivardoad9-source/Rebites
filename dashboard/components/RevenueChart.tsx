@@ -19,8 +19,8 @@ import type { ChartPoint } from '@/lib/types';
  * mode-nya dan cek keterbacaan untuk buta warna (protan/deutan/tritan).
  */
 const PALETTE = {
-  light: { omzet: '#C85F19', pengeluaran: '#0E9488', proyeksi: '#8B7B6E', ink: '#2B1B12' },
-  dark: { omzet: '#D4762B', pengeluaran: '#0FA085', proyeksi: '#A0907F', ink: '#F7ECDD' },
+  light: { omzet: '#2B57E8', pengeluaran: '#C2410C', proyeksi: '#7A8296', ink: '#131A2E' },
+  dark: { omzet: '#5C86F0', pengeluaran: '#D4762B', proyeksi: '#96A0B8', ink: '#EEF2FB' },
 } as const;
 
 type SeriesColors = { omzet: string; pengeluaran: string; proyeksi: string; ink: string };

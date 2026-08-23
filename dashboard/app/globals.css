@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 /*
- * Palet Re-Bites (mango, cheese, leaf, coffee, ivory) dijadikan token semantik
- * supaya satu set utility bisa dipakai di mode terang maupun gelap:
+ * Warna dijadikan token semantik supaya satu set utility bisa dipakai di mode
+ * terang maupun gelap:
  *   page  = latar halaman   card = permukaan kartu
  *   well  = blok inset      field = input & chip
  *   ink   = teks utama      good/warn/bad = status
@@ -10,14 +10,15 @@
  * tempat: pilihan manual (data-theme) dan preferensi sistem.
  */
 @theme {
-  --color-page: #fff8ec;
-  --color-card: #fffdf7;
-  --color-well: #fbf3e4;
+  --color-page: #f4f6fb;
+  --color-card: #ffffff;
+  --color-well: #f1f4fa;
   --color-field: #ffffff;
-  --color-ink: #2b1b12;
+  --color-ink: #131a2e;
 
-  --color-mango: #e8792d;
-  --color-mango-deep: #c85f19;
+  /* brand = biru aksen (tombol, nav aktif, hero); cheese & leaf jadi aksen kedua */
+  --color-brand: #2b57e8;
+  --color-brand-deep: #1e40c8;
   --color-cheese: #b8891c;
   --color-leaf: #1f4d3d;
 
@@ -32,14 +33,14 @@
 }
 
 :root {
-  --dk-page: #14100d;
-  --dk-card: #1f1811;
-  --dk-well: #191310;
-  --dk-field: #271e17;
-  --dk-ink: #f7ecdd;
+  --dk-page: #0d111d;
+  --dk-card: #181e2f;
+  --dk-well: #121828;
+  --dk-field: #1f2637;
+  --dk-ink: #eef2fb;
 
-  --dk-mango: #ef8f42;
-  --dk-mango-deep: #f2a15c;
+  --dk-brand: #5c86f0;
+  --dk-brand-deep: #7ba0f7;
   --dk-cheese: #e2b955;
   --dk-leaf: #6fcfa8;
 
@@ -58,8 +59,8 @@
   --color-well: var(--dk-well);
   --color-field: var(--dk-field);
   --color-ink: var(--dk-ink);
-  --color-mango: var(--dk-mango);
-  --color-mango-deep: var(--dk-mango-deep);
+  --color-brand: var(--dk-brand);
+  --color-brand-deep: var(--dk-brand-deep);
   --color-cheese: var(--dk-cheese);
   --color-leaf: var(--dk-leaf);
   --color-good: var(--dk-good);
@@ -78,8 +79,8 @@
     --color-well: var(--dk-well);
     --color-field: var(--dk-field);
     --color-ink: var(--dk-ink);
-    --color-mango: var(--dk-mango);
-    --color-mango-deep: var(--dk-mango-deep);
+    --color-brand: var(--dk-brand);
+    --color-brand-deep: var(--dk-brand-deep);
     --color-cheese: var(--dk-cheese);
     --color-leaf: var(--dk-leaf);
     --color-good: var(--dk-good);
@@ -141,20 +142,20 @@
 @layer components {
   /* Kartu bergaya app finansial: sudut besar, tanpa garis tepi, bayangan lembut. */
   .card {
-    @apply rounded-3xl bg-card p-4 shadow-[0_2px_16px_-4px_rgba(43,27,18,0.10),0_1px_3px_rgba(43,27,18,0.05)];
+    @apply rounded-3xl bg-card p-4 shadow-[0_2px_16px_-4px_rgba(19,26,46,0.10),0_1px_3px_rgba(19,26,46,0.05)];
   }
 
   .card-inset {
     @apply rounded-2xl bg-well p-3;
   }
 
-  /* Kartu hero: gradien mango, dipakai untuk angka utama. */
+  /* Kartu hero: gradien biru, dipakai untuk angka utama. */
   .card-hero {
     @apply relative overflow-hidden rounded-3xl p-5 text-white;
-    background: linear-gradient(150deg, #f0913f 0%, #e8792d 45%, #b95315 100%);
+    background: linear-gradient(150deg, #4b7bff 0%, #2b57e8 45%, #1b3aae 100%);
     box-shadow:
-      0 18px 32px -18px rgba(200, 95, 25, 0.75),
-      0 2px 8px rgba(43, 27, 18, 0.12);
+      0 18px 32px -18px rgba(43, 87, 232, 0.7),
+      0 2px 8px rgba(19, 26, 46, 0.14);
   }
 
   .label {
@@ -162,11 +163,11 @@
   }
 
   .field {
-    @apply w-full rounded-xl border border-ink/15 bg-field px-3 py-3 text-ink outline-none transition focus:border-mango focus:ring-2 focus:ring-mango/25;
+    @apply w-full rounded-xl border border-ink/15 bg-field px-3 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/25;
   }
 
   .btn-primary {
-    @apply inline-flex w-full items-center justify-center gap-2 rounded-xl bg-mango px-4 py-3 font-semibold text-white transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .btn-ghost {

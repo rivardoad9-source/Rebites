@@ -46,10 +46,10 @@ export default function LoginForm({ next }: { next: string }) {
     <main className="mx-auto flex min-h-dvh w-full max-w-sm flex-col justify-center px-5 py-10">
       <div className="card">
         <div className="mb-5 text-center">
-          <span className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-mango/10 text-mango-deep">
+          <span className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-brand/10 text-brand-deep">
             <CupSoda className="h-7 w-7" aria-hidden />
           </span>
-          <p className="text-xs font-semibold tracking-[0.18em] text-mango-deep uppercase">
+          <p className="text-xs font-semibold tracking-[0.18em] text-brand-deep uppercase">
             Re-Bites POS
           </p>
           <h1 className="text-xl leading-tight font-extrabold text-ink">Mango Cheese Dashboard</h1>
