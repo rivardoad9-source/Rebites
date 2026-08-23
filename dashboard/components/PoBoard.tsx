@@ -179,7 +179,7 @@ export default function PoBoard({ onChanged }: { onChanged?: () => void }) {
             onClick={() => setActive(b.tab)}
             className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
               board?.tab === b.tab
-                ? 'border-mango bg-mango/10 text-mango-deep'
+                ? 'border-brand bg-brand/10 text-brand-deep'
                 : 'border-ink/15 bg-field text-ink/70'
             }`}
           >
@@ -321,7 +321,7 @@ export default function PoBoard({ onChanged }: { onChanged?: () => void }) {
                   onClick={() => setLunas(value)}
                   className={`flex-1 rounded-xl border px-3 py-2 text-sm font-semibold transition ${
                     lunas === value
-                      ? 'border-mango bg-mango/10 text-mango-deep'
+                      ? 'border-brand bg-brand/10 text-brand-deep'
                       : 'border-ink/15 bg-field text-ink/60'
                   }`}
                 >
@@ -349,7 +349,7 @@ function Header({ action }: { action?: React.ReactNode }) {
   return (
     <header className="mb-3 flex items-start justify-between gap-2">
       <div className="flex items-center gap-2">
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-mango/10 text-mango-deep">
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand/10 text-brand-deep">
           <ClipboardList className="h-4 w-4" aria-hidden />
         </span>
         <div>
